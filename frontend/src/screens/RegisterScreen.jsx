@@ -3,6 +3,10 @@ import myFetch from '../components/fetcher';
 
 const RegisterForm = (e) => {
   console.log(e);
+  if (e.password !== e.confirmPassword) {
+    console.log('Passwords dont match');
+    return;
+  }
   const body = {
     email: e.email,
     password: e.password,
@@ -20,14 +24,16 @@ const RegisterForm = (e) => {
 const RegisterScreen = () => {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
+  const [confirmPassword, setConfirmPassword] = React.useState('');
   const [name, setName] = React.useState('');
   return (
     <div>
       <h1>Register Form</h1>
       Email<input type="text" onChange={(e) => setEmail(e.target.value)} /><br/>
       Password<input type="text" onChange={(e) => setPassword(e.target.value)} /><br/>
+      ConfirmPassword<input type="text" onChange={(e) => setConfirmPassword(e.target.value)} /><br/>
       Name<input type="text" onChange={(e) => setName(e.target.value)} /><br/>
-      <button onClick={() => RegisterForm({ email: email, password: password, name: name })}>Submit</button>
+      <button onClick={() => RegisterForm({ email: email, password: password, confirmPassword: confirmPassword, name: name })}>Submit</button>
     </div>
   );
 }
