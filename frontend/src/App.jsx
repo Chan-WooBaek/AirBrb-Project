@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link, Navigate } from 'react-router-dom';
 
 import ListingsScreen from './screens/ListingsScreen';
 import LoginScreen from './screens/LoginScreen';
@@ -16,10 +16,11 @@ function App () {
         <Link to="register">Register</Link>
 
         <Routes>
-          <Route exact path ="/" element={<ListingsScreen/>}></Route>
+          <Route path="listingsScreen" element={<ListingsScreen/>}></Route>
           <Route path="/login" element={<LoginScreen/>}></Route>
           <Route path="register" element={<RegisterScreen/>}></Route>
-          <Route exact path ="/hostedListings" element={<HostedListingsScreen/>}></Route>
+          <Route path ="/hostedListings" element={<HostedListingsScreen/>}></Route>
+          <Route path ="/" element={<Navigate replace to="/listingsScreen"/>}></Route>
         </Routes>
       </Router>
     </>
