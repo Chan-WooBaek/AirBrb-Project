@@ -16,11 +16,11 @@ function App () {
         <Link to="register">Register</Link>
 
         <Routes>
-          <Route path="listingsScreen" element={<ListingsScreen/>}></Route>
+          <Route path="/listings" element={<ListingsScreen/>}></Route>
           <Route path="/login" element={<LoginScreen/>}></Route>
-          <Route path="register" element={<RegisterScreen/>}></Route>
+          <Route path="/register" element={<RegisterScreen/>}></Route>
           <Route path ="/hostedListings" element={<HostedListingsScreen/>}></Route>
-          <Route path ="/" element={<Navigate replace to="/listingsScreen"/>}></Route>
+          <Route path ="/" element={<Navigate replace to="/listings"/>}></Route>
         </Routes>
       </Router>
     </>
