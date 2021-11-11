@@ -5,7 +5,15 @@ const myFetch = (method, path, token, body) => {
     body: JSON.stringify(body),
   };
   if (token !== null) {
-    requestOption.headers = { Authorization: `Bearer ${token}` };
+    requestOption.headers = {
+      Authorization: `Bearer ${token}`
+    };
+    if (body !== null) {
+      requestOption.headers = {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      };
+    }
   }
 
   return new Promise((resolve, reject) => {
