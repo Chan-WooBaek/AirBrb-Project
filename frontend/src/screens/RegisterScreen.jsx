@@ -1,5 +1,6 @@
 import React from 'react';
 import myFetch from '../components/fetcher';
+import LogoutButton from '../components/logoutButton';
 
 const RegisterForm = (e) => {
   console.log();
@@ -12,6 +13,7 @@ const RegisterForm = (e) => {
     .then((data) => {
       localStorage.setItem('token', data.token);
       localStorage.setItem('isLoggedIn', true);
+      window.location.reload();
       console.log('Successfully registered new user');
     })
     .catch((data) => {
@@ -39,6 +41,10 @@ const RegisterScreen = () => {
       <div>{password !== confirmPassword ? "passswords don't match" : 'passwords match'}</div>
       Name<input type="text" onChange={(e) => setName(e.target.value)} /><br/>
       <button onClick={() => RegisterForm({ email: email, password: password, confirmPassword: confirmPassword, name: name })}>Submit</button>
+      {localStorage.getItem('token') !== 'null'
+        ? <LogoutButton></LogoutButton>
+        : 'Not LoggedIn'
+      }
     </div>
   );
 }
