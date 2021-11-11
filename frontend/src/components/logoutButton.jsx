@@ -12,13 +12,14 @@ const loggingOut = () => {
       // { <Navigate replace to="/listings"/> }
     })
     .catch((data) => {
+      alert('Already logged out');
       console.log('Not successful in logging out');
     })
 }
 
 const LogoutButton = () => {
   return (
-    <Link to="/">
+    <Link to="/listings" onClick={() => window.location.reload()}>
       <button onClick={() => loggingOut()}>Logout</button>
     </Link>
   )

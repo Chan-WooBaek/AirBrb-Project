@@ -10,10 +10,11 @@ const LoginForm = (e) => {
   myFetch('POST', 'user/auth/login', null, body)
     .then((data) => {
       console.log('Successfully logged in');
-      localStorage.setItem('token', data.token)
+      localStorage.setItem('token', data.token);
       // (localStorage.getItem('token')) to get token
     })
     .catch((data) => {
+      alert('email or password does not match');
       console.log('Not successful in logging in');
     })
 }
