@@ -13,7 +13,8 @@ function App () {
       <Router>
         <Link to="/">Home</Link>
         <Link to="/login">Login</Link>
-        <Link to="register">Register</Link>
+        <Link to="/register">Register</Link>
+        <Link to="/hostedListings">Hosted Listings</Link>
 
         <Routes>
           <Route path="/listings" element={<ListingsScreen/>}></Route>
