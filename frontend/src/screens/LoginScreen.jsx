@@ -1,5 +1,6 @@
 import React from 'react';
 import myFetch from '../components/fetcher';
+import LogoutButton from '../components/logoutButton';
 
 const LoginForm = (e) => {
   console.log(e);
@@ -10,7 +11,8 @@ const LoginForm = (e) => {
   myFetch('POST', 'user/auth/login', null, body)
     .then((data) => {
       console.log('Successfully logged in');
-      localStorage.setItem('token', data.token)
+      localStorage.setItem('token', data.token);
+      window.location.reload();
       // (localStorage.getItem('token')) to get token
     })
     .catch((data) => {
@@ -27,6 +29,10 @@ const LoginScreen = () => {
       Email<input type="text" onChange={(e) => setEmail(e.target.value)} /><br/>
       Password<input type="text" onChange={(e) => setPassword(e.target.value)} /><br/>
       <button onClick={() => LoginForm({ email: email, password: password })}>Submit</button>
+      {localStorage.getItem('token') !== 'null'
+        ? <LogoutButton></LogoutButton>
+        : 'Not LoggedIn'
+      }
     </div>
   );
 }
