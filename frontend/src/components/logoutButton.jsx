@@ -1,12 +1,15 @@
 import React from 'react';
 import myFetch from './fetcher';
-// import { BrowserRouter as Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-const loggingOut = (token) => {
+const loggingOut = () => {
+  const token = localStorage.getItem('token');
   myFetch('POST', 'user/auth/logout', token, null)
     .then((data) => {
       console.log('Successfully logged out');
-      localStorage.setItem('token', null)
+      localStorage.setItem('token', null);
+      console.log(localStorage.getItem('token'))
+      // { <Navigate replace to="/listings"/> }
     })
     .catch((data) => {
       console.log('Not successful in logging out');
@@ -14,9 +17,10 @@ const loggingOut = (token) => {
 }
 
 const LogoutButton = () => {
-  const token = localStorage.getItem('token');
   return (
-    <button onClick={() => loggingOut(token)}>Logout</button>
+    <Link to="/">
+      <button onClick={() => loggingOut()}>Logout</button>
+    </Link>
   )
 }
 
