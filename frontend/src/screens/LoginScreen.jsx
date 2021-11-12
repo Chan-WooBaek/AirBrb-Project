@@ -1,6 +1,7 @@
 import React from 'react';
 import myFetch from '../components/fetcher';
 import LogoutButton from '../components/logoutButton';
+import { Link } from 'react-router-dom';
 
 const LoginForm = (e) => {
   console.log(e);
@@ -30,7 +31,11 @@ const LoginScreen = () => {
       Password<input type="text" onChange={(e) => setPassword(e.target.value)} /><br/>
       <button onClick={() => LoginForm({ email: email, password: password })}>Submit</button>
       {localStorage.getItem('token') !== 'null'
-        ? <LogoutButton></LogoutButton>
+        ? <>
+            <LogoutButton></LogoutButton>
+            <Link to="/">Listings</Link>
+            <Link to="/hostedListings">MyListings</Link>
+          </>
         : 'Not LoggedIn'
       }
     </div>

@@ -1,6 +1,7 @@
 import React from 'react';
 import myFetch from '../components/fetcher';
 import LogoutButton from '../components/logoutButton';
+import { Link } from 'react-router-dom';
 
 const RegisterForm = (e) => {
   console.log();
@@ -42,7 +43,11 @@ const RegisterScreen = () => {
       Name<input type="text" onChange={(e) => setName(e.target.value)} /><br/>
       <button onClick={() => RegisterForm({ email: email, password: password, confirmPassword: confirmPassword, name: name })}>Submit</button>
       {localStorage.getItem('token') !== 'null'
-        ? <LogoutButton></LogoutButton>
+        ? <>
+            <LogoutButton></LogoutButton>
+            <Link to="/">Listings</Link>
+            <Link to="/hostedListings">MyListings</Link>
+          </>
         : 'Not LoggedIn'
       }
     </div>
