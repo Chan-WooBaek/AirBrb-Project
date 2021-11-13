@@ -51,11 +51,11 @@ const EditButton = (id) => {
   const [amenities, setAmenities] = React.useState('');
   const [beds, setBeds] = React.useState(0);
 
-  async function getListingInfo (prop) {
-    const response = await myFetch('GET', 'listings/' + prop.id, null, null)
-    console.log(response)
-    return response.json()
-  }
+  // async function getListingInfo (prop) {
+  //   const response = await myFetch('GET', 'listings/' + prop.id, null, null)
+  //   console.log(response)
+  //   return response.json()
+  // }
 
   // const [bedrooms, setBedrooms] = React.useState([''])
   return (
