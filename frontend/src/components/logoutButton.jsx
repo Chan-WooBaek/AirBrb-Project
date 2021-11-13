@@ -9,6 +9,7 @@ const loggingOut = () => {
       console.log('Successfully logged out');
       localStorage.setItem('token', null);
       console.log(localStorage.getItem('token'))
+      window.location.reload()
       // { <Navigate replace to="/listings"/> }
     })
     .catch((data) => {

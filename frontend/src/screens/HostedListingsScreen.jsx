@@ -3,17 +3,9 @@ import CreateListingForm from '../screens/CreateListingScreen';
 import EditButton from '../components/EditButton';
 import LogoutButton from '../components/logoutButton';
 import { Link } from 'react-router-dom';
-import myFetch from '../components/fetcher';
+import ListingsDisplay from '../components/ListingsDisplay';
 
 const HostedListingsScreen = () => {
-  const testing = () => {
-    myFetch('GET', 'listings', null)
-      .then((data) => {
-        data.listings.map(listing => (
-          console.log(listing)
-        ))
-      })
-  }
   return (
     <div>
       HostedListingsScreen
@@ -24,10 +16,10 @@ const HostedListingsScreen = () => {
             <LogoutButton></LogoutButton>
             <Link to="/">Listings</Link>
             <Link to="/hostedListings">MyListings</Link>
+            <ListingsDisplay></ListingsDisplay>
           </>
         : <>
             {'Not LoggedIn'}
-            {testing()}
           </>
       }
     </div>
