@@ -26,25 +26,38 @@ export default function ColumnGroupingTable () {
           newRow.push({
             content: <>
               <div>{'Title: ' + row.title}</div>
-              <div>{'Owner' + row.owner}</div>
+              <div>{'Owner: ' + row.owner}</div>
               <div>
                 <h2>
                   Address:
                 </h2>
-                <p>Street: {row.address.street}
-                City: {row.address.city} <br />
-                State: {row.address.state} <br />
-                Postcode: {row.address.postcode}</p>
+                <p>
+                  Street: {row.address.street} <br />
+                  City: {row.address.city} <br />
+                  State: {row.address.state} <br />
+                  Postcode: {row.address.postcode}
+                </p>
               </div>
               <div>{'Price: ' + row.price}</div>
               <div>{'Thumbnail: ' + row.thumbnail}</div>
-              <div>{'Metadata: ' + row.metadata}</div>
+              <div>
+                <h2>
+                  Metadata:
+                </h2>
+                <p>
+                  {console.log(row.metadata)}
+                  Bathrooms: {row.metadata}
+                  Proptypes: {row.metadata}
+                  Amenities: {row.metadata}
+                </p>
+              </div>
               <div>{'Reviews: ' + row.reviews}</div>
               <div>{'Availability: ' + row.availability}</div>
               <div>{'Published: ' + row.published}</div>
               <div>{'PostedOn: ' + row.postedOn}</div>
+              <button>Delete</button>
             </>,
-            code: row.title
+            code: row.title,
           })
         }
         setRows(newRow)
