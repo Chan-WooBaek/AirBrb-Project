@@ -8,9 +8,12 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import { useNavigate } from 'react-router-dom';
 import myFetch from '../components/fetcher';
+import DeleteHostedButton from './DeleteHostedButton';
+import LiveHostedButton from './LiveHostedButton';
 
 const columns = [
   { id: 'content', label: 'Content', minWidth: 500 },
+  { id: 'Buttons', maxWidth: 5 },
 ];
 
 export default function ColumnGroupingTable () {
@@ -32,47 +35,23 @@ export default function ColumnGroupingTable () {
             newRow.push({
               content: <>
                 <div>{'Title: ' + res.title}</div>
-                <div>{'Owner: ' + res.owner}</div>
-                <div>
-                  <h2>
-                    Address:
-                  </h2>
-                  <p>
-                    Street: {res.address.street} <br />
-                    City: {res.address.city} <br />
-                    State: {res.address.state} <br />
-                    Postcode: {res.address.postcode}
-                  </p>
-                </div>
-                <div>{'Price: ' + res.price}</div>
-                <div>{'Thumbnail: ' + res.thumbnail}</div>
-                <div>
-                  <h2>
-                    Metadata:
-                  </h2>
-                  <p>
-                    Bathrooms: {res.metadata.bathrooms}
-                    Proptypes: {res.metadata.propTypes}
-                    Amenities: {res.metadata.amenities}
-                  </p>
-                </div>
+                <div>{'Property Type: ' + res.metadata.propType}</div>
+                <div>{'Bedrooms: ' + res.metadata.beds}</div>
+                <div>{'Bathrooms: ' + res.metadata.bathrooms}</div>
+                <div>{'Thumbnail: '}<img src={res.thumbnail} /></div>
                 <div>{'Reviews: ' + res.reviews}</div>
-                <div>{'Availability: ' + res.availability}</div>
-                <div>{'Published: ' + res.published}</div>
-                <div>{'PostedOn: ' + res.postedOn}</div>
-                <button>Delete</button>
+                <div>{'Price: ' + res.price}</div>
               </>,
               code: hostedIdList[idIndex],
+              Buttons: <>
+                <DeleteHostedButton id={hostedIdList[idIndex]}/>
+                <LiveHostedButton></LiveHostedButton>
+              </>,
             })
             idIndex++;
           }
           setRows(newRow)
         })
-        for (const id of hostedIdList) {
-          myFetch('GET', 'listings/' + id, null)
-            .then(data => {
-            })
-        }
       })
   }, [])
 
@@ -87,6 +66,14 @@ export default function ColumnGroupingTable () {
 
   const handleRowClick = useNavigate();
 
+  const [cursor, setCursor] = React.useState('crosshair');
+
+  const handleRowHover = () => {
+    setCursor(() => {
+      return 'pointer';
+    })
+  }
+
   return (
     <Paper sx={{ width: '100%' }}>
       <TableContainer sx={{ maxHeight: 440 }}>
@@ -96,15 +83,21 @@ export default function ColumnGroupingTable () {
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => {
                 return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={row.code} onClick={() => handleRowClick('../listings', { replace: true })}>
+                  <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
                     {columns.map((column) => {
                       const value = row[column.id];
                       return (
-                        <TableCell key={column.id} align={column.align}>
-                          {column.format && typeof value === 'number'
-                            ? column.format(value)
-                            : value}
-                        </TableCell>
+                        column.id === 'content'
+                          ? <TableCell key={column.id} align={column.align} onClick={() => handleRowClick('../listings', { replace: true })} onMouseEnter={() => handleRowHover()} style={{ cursor: cursor }}>
+                            {column.format && typeof value === 'number'
+                              ? column.format(value)
+                              : value}
+                            </TableCell>
+                          : <TableCell key={column.id} align={column.align}>
+                            {column.format && typeof value === 'number'
+                              ? column.format(value)
+                              : value}
+                            </TableCell>
                       );
                     })}
                   </TableRow>
