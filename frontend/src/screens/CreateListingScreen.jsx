@@ -7,6 +7,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import BedroomInput from '../components/BedroomInput';
 
 const createListing = (prop) => {
   console.log(prop.title);
@@ -36,6 +37,7 @@ const CreateListingForm = () => {
   };
 
   const handleClose = () => {
+    setBedrooms([''])
     setOpen(false);
   };
 
@@ -50,7 +52,30 @@ const CreateListingForm = () => {
   const [propType, setPropType] = React.useState('');
   const [amenities, setAmenities] = React.useState('');
   const [beds, setBeds] = React.useState(0);
-  // const [bedrooms, setBedrooms] = React.useState([''])
+  const [bedrooms, setBedrooms] = React.useState([''])
+
+  const updateBedrooms = (index, newInput) => {
+    const newBedrooms = [...bedrooms];
+    newBedrooms[index] = newInput;
+    setBedrooms(newBedrooms);
+  }
+
+  const addBedrooms = () => {
+    const newBedrooms = [...bedrooms];
+    newBedrooms.push('');
+    setBedrooms(newBedrooms);
+  }
+
+  const getBedrooms = () => {
+    const bedroomDic = {};
+    let i = 1;
+    for (const def in bedrooms) {
+      bedroomDic['Bedroom ' + i] = bedrooms[def];
+      i += 1
+    }
+    return bedroomDic;
+  }
+
   return (
     <div>
       <Button variant="outlined" onClick={handleClickOpen}>
@@ -166,15 +191,24 @@ const CreateListingForm = () => {
             autoFocus
             margin="dense"
             id="beds"
-            label="No. of beds"
+            label="Total number of beds"
             type="number"
             fullWidth
             variant="standard"
             onChange={(e) => setBeds(e.target.value)}
           />
+          {bedrooms.map((bedroom, idx) => {
+            return <BedroomInput
+              key={bedroom + idx}
+              idx={idx}
+              state={bedroom}
+              setState={updateBedrooms}
+            />
+          })}
+        {console.log(getBedrooms())}
         </DialogContent>
         <DialogActions>
-          {/* <Button onClick={}>Add Bedroom</Button> */}
+          <Button onClick={addBedrooms}>Add Bedroom</Button>
           <Button onClick={handleClose}>Cancel</Button>
           <Button onClick={() => createListing({
             title: title,
@@ -189,6 +223,7 @@ const CreateListingForm = () => {
             metadata: {
               bathrooms: bathrooms,
               beds: beds,
+              bedrooms: getBedrooms(),
               propType: propType,
               amenities: amenities
             }
