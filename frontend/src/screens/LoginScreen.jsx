@@ -13,6 +13,7 @@ const LoginForm = (e) => {
     .then((data) => {
       console.log('Successfully logged in');
       localStorage.setItem('token', data.token);
+      localStorage.setItem('user', e.email);
       window.location.reload();
       // (localStorage.getItem('token')) to get token
     })

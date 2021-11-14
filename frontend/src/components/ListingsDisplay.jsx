@@ -21,46 +21,58 @@ export default function ColumnGroupingTable () {
   React.useEffect(() => {
     myFetch('GET', 'listings', null)
       .then((data) => {
-        const newRow = []
-        for (const row of data.listings) {
-          newRow.push({
-            content: <>
-              <div>{'Title: ' + row.title}</div>
-              <div>{'Owner: ' + row.owner}</div>
-              <div>
-                <h2>
-                  Address:
-                </h2>
-                <p>
-                  Street: {row.address.street} <br />
-                  City: {row.address.city} <br />
-                  State: {row.address.state} <br />
-                  Postcode: {row.address.postcode}
-                </p>
-              </div>
-              <div>{'Price: ' + row.price}</div>
-              <div>{'Thumbnail: ' + row.thumbnail}</div>
-              <div>
-                <h2>
-                  Metadata:
-                </h2>
-                <p>
-                  {console.log(row.metadata)}
-                  Bathrooms: {row.metadata}
-                  Proptypes: {row.metadata}
-                  Amenities: {row.metadata}
-                </p>
-              </div>
-              <div>{'Reviews: ' + row.reviews}</div>
-              <div>{'Availability: ' + row.availability}</div>
-              <div>{'Published: ' + row.published}</div>
-              <div>{'PostedOn: ' + row.postedOn}</div>
-              <button>Delete</button>
-            </>,
-            code: row.title,
-          })
+        const hostedIdList = [];
+        for (const row of data.listings) if (localStorage.getItem('user') === row.owner) hostedIdList.push(row.id)
+        Promise.all(hostedIdList.map(id => myFetch('GET', 'listings/' + id, null))).then(responses =>
+          Promise.all(responses.map(res => res.listing))
+        ).then(data => {
+          const newRow = [];
+          let idIndex = 0;
+          for (const res of data) {
+            newRow.push({
+              content: <>
+                <div>{'Title: ' + res.title}</div>
+                <div>{'Owner: ' + res.owner}</div>
+                <div>
+                  <h2>
+                    Address:
+                  </h2>
+                  <p>
+                    Street: {res.address.street} <br />
+                    City: {res.address.city} <br />
+                    State: {res.address.state} <br />
+                    Postcode: {res.address.postcode}
+                  </p>
+                </div>
+                <div>{'Price: ' + res.price}</div>
+                <div>{'Thumbnail: ' + res.thumbnail}</div>
+                <div>
+                  <h2>
+                    Metadata:
+                  </h2>
+                  <p>
+                    Bathrooms: {res.metadata.bathrooms}
+                    Proptypes: {res.metadata.propTypes}
+                    Amenities: {res.metadata.amenities}
+                  </p>
+                </div>
+                <div>{'Reviews: ' + res.reviews}</div>
+                <div>{'Availability: ' + res.availability}</div>
+                <div>{'Published: ' + res.published}</div>
+                <div>{'PostedOn: ' + res.postedOn}</div>
+                <button>Delete</button>
+              </>,
+              code: hostedIdList[idIndex],
+            })
+            idIndex++;
+          }
+          setRows(newRow)
+        })
+        for (const id of hostedIdList) {
+          myFetch('GET', 'listings/' + id, null)
+            .then(data => {
+            })
         }
-        setRows(newRow)
       })
   }, [])
 
