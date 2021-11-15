@@ -3,7 +3,7 @@ import CreateListingForm from '../screens/CreateListingScreen';
 import EditButton from '../components/EditButton';
 import LogoutButton from '../components/logoutButton';
 import { Link } from 'react-router-dom';
-import ListingsDisplay from '../components/ListingsDisplay';
+import HostedListingsDisplay from '../components/HostedListingsDisplay';
 import PropTypes from 'prop-types';
 
 HostedListingsScreen.propTypes = {
@@ -22,7 +22,7 @@ export default function HostedListingsScreen ({ isLoggedIn, setLoggedIn }) {
             <LogoutButton isLoggedIn={isLoggedIn} setLoggedIn={setLoggedIn}></LogoutButton>
             <Link to="/">Listings</Link>
             <Link to="/hostedListings">MyListings</Link>
-            <ListingsDisplay></ListingsDisplay>
+            <HostedListingsDisplay></HostedListingsDisplay>
           </>
         : <>
             {'Not LoggedIn'}

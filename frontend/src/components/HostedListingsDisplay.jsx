@@ -8,9 +8,12 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import { useNavigate } from 'react-router-dom';
 import myFetch from './fetcher';
+import DeleteHostedButton from './DeleteHostedButton';
+import LiveHostedButton from './LiveHostedButton';
 
 const columns = [
   { id: 'content', label: 'Content', minWidth: 500 },
+  { id: 'Buttons', maxWidth: 5 },
 ];
 
 export default function ColumnGroupingTable () {
@@ -22,24 +25,29 @@ export default function ColumnGroupingTable () {
     myFetch('GET', 'listings', null)
       .then((data) => {
         const hostedIdList = [];
-        for (const row of data.listings) hostedIdList.push(row.id)
+        for (const row of data.listings) if (localStorage.getItem('user') === row.owner) hostedIdList.push(row.id)
         Promise.all(hostedIdList.map(id => myFetch('GET', 'listings/' + id, null))).then(responses =>
           Promise.all(responses.map(res => res.listing))
         ).then(data => {
           const newRow = [];
           let idIndex = 0;
           for (const res of data) {
-            if (res.published) {
-              newRow.push({
-                content: <>
-                  <div>{'Title: ' + res.title}</div>
-                  <div>{'Thumbnail: '}<img src={res.thumbnail} /></div>
-                  <div>{'Reviews: ' + res.reviews}</div>
-                  <div>{'Price: ' + res.price}</div>
-                </>,
-                code: hostedIdList[idIndex],
-              })
-            }
+            newRow.push({
+              content: <>
+                <div>{'Title: ' + res.title}</div>
+                <div>{'Property Type: ' + res.metadata.propType}</div>
+                <div>{'Bedrooms: ' + res.metadata.beds}</div>
+                <div>{'Bathrooms: ' + res.metadata.bathrooms}</div>
+                <div>{'Thumbnail: '}<img src={res.thumbnail} /></div>
+                <div>{'Reviews: ' + res.reviews}</div>
+                <div>{'Price: ' + res.price}</div>
+              </>,
+              code: hostedIdList[idIndex],
+              Buttons: <>
+                <DeleteHostedButton id={hostedIdList[idIndex]}/>
+                <LiveHostedButton id={hostedIdList[idIndex]}></LiveHostedButton>
+              </>,
+            })
             idIndex++;
           }
           setRows(newRow)
@@ -57,6 +65,10 @@ export default function ColumnGroupingTable () {
   };
 
   const handleRowClick = useNavigate();
+
+  const editRoute = (id) => {
+    handleRowClick('../listings/' + id, { replace: true })
+  }
 
   const [cursor, setCursor] = React.useState('crosshair');
 
@@ -80,7 +92,7 @@ export default function ColumnGroupingTable () {
                       const value = row[column.id];
                       return (
                         column.id === 'content'
-                          ? <TableCell key={column.id} align={column.align} onClick={() => handleRowClick('../listings', { replace: true })} onMouseEnter={() => handleRowHover()} style={{ cursor: cursor }}>
+                          ? <TableCell key={column.id} align={column.align} onClick={() => editRoute(row.code)} onMouseEnter={() => handleRowHover()} style={{ cursor: cursor }}>
                             {column.format && typeof value === 'number'
                               ? column.format(value)
                               : value}

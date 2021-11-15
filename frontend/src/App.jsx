@@ -10,7 +10,6 @@ import HostedListingsScreen from './screens/HostedListingsScreen';
 
 function App () {
   const [isLoggedIn, setLoggedIn] = React.useState(false);
-  console.log(setLoggedIn)
   return (
     <>
       <Router>
