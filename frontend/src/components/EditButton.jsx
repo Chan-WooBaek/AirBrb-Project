@@ -7,6 +7,8 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+// import { StoreContext } from '../utils/store';
+import { useNavigate } from 'react-router-dom';
 
 const editListing = (prop) => {
   console.log(prop.title);
@@ -29,10 +31,12 @@ const editListing = (prop) => {
 }
 
 const EditButton = (id) => {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(true);
+  const handleEditClick = useNavigate();
 
   const handleClickOpen = () => {
     setOpen(true);
+    handleEditClick('../hostedListings/' + id.id, { replace: true })
   };
 
   const handleClose = () => {
