@@ -10,7 +10,7 @@ const HostedListingsScreen = () => {
     <div>
       HostedListingsScreen
       <CreateListingForm></CreateListingForm>
-      <EditButton id={354395729}></EditButton>
+      <EditButton id={202301096}></EditButton>
       {localStorage.getItem('token') !== 'null'
         ? <>
             <LogoutButton></LogoutButton>

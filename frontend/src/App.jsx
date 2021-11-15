@@ -6,7 +6,7 @@ import ListingsScreen from './screens/ListingsScreen';
 import LoginScreen from './screens/LoginScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import HostedListingsScreen from './screens/HostedListingsScreen';
-// import EditButton from './components/EditButton';
+import EditButton from './components/EditButton';
 
 function App () {
   return (
@@ -23,6 +23,7 @@ function App () {
           <Route path="/register" element={<RegisterScreen/>}></Route>
           <Route path ="/hostedListings" element={<HostedListingsScreen/>}></Route>
           {/* <Route path = "/hostedListings/354395729" element={<EditButton id={354395729}/>}></Route> */}
+          <Route path = "/hostedListings/:id" element={<EditButton/>}></Route>
           <Route path ="/" element={<Navigate replace to="/listings"/>}></Route>
         </Routes>
       </Router>

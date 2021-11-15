@@ -7,8 +7,11 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import BedroomInput from './BedroomInput';
+// import getListingDetails from '../utils/helpers';
 // import { StoreContext } from '../utils/store';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
+// import { useParams } from 'react-router';
 
 const editListing = (prop) => {
   console.log(prop.title);
@@ -30,31 +33,109 @@ const editListing = (prop) => {
     .catch(err => console.log(err))
 }
 
+async function updateListingDetails (listingId, setListingDetails) {
+  const response = await myFetch('GET', `listings/${listingId.id}`, null);
+  setListingDetails(response.listing);
+  // console.log(response.listing);
+}
+
 const EditButton = (id) => {
-  const [open, setOpen] = React.useState(true);
-  const handleEditClick = useNavigate();
+  // const params = useParams();
+  // const id = params.id;
+  const [open, setOpen] = React.useState(false);
+  // const handleEditClick = useNavigate();
 
   const handleClickOpen = () => {
     setOpen(true);
-    handleEditClick('../hostedListings/' + id.id, { replace: true })
+    // handleEditClick(`../hostedListings/${id}`, { replace: true })
   };
 
   const handleClose = () => {
     setOpen(false);
   };
 
-  const [title, setTitle] = React.useState('');
-  const [street, setStreet] = React.useState('');
-  const [city, setCity] = React.useState('');
-  const [postcode, setPostcode] = React.useState(0);
-  const [state, setState] = React.useState('');
-  const [price, setPrice] = React.useState(0);
-  const [thumbnail, setThumbnail] = React.useState('');
-  const [bathrooms, setBathrooms] = React.useState(0);
-  const [propType, setPropType] = React.useState('');
-  const [amenities, setAmenities] = React.useState('');
-  const [beds, setBeds] = React.useState(0);
+  const [listingDetails, setListingDetails] = React.useState({
+    title: '',
+    owner: '',
+    address: {
+      street: '',
+      city: '',
+      state: '',
+      postcode: '',
+    },
+    price: 0,
+    thumbnail: '',
+    metadata: {
+      bathrooms: '',
+      beds: '',
+      bedrooms: {},
+      propType: '',
+      amenities: ''
+    },
+    reviews: [
+      {}
+    ],
+    availability: [
+      {}
+    ],
+    published: false,
+    postedOn: ''
+  })
 
+  const getBedroomsList = () => {
+    const bedrooms = [];
+    const bedroomsDict = listingDetails.metadata.bedrooms;
+    for (const bed in bedroomsDict) {
+      bedrooms.push(bedroomsDict[bed]);
+    }
+    // setBedrooms(bedrooms);
+    return bedrooms;
+  }
+  const [bedrooms, setBedrooms] = React.useState(['']);
+  React.useEffect(() => {
+    setBedrooms(getBedroomsList);
+  }, []);
+  // React.useEffect(() => {
+  //   updateListingDetails(id, setListingDetails);
+  // }, []);
+
+  const updateBedrooms = (index, newInput) => {
+    const newBedrooms = [...bedrooms];
+    newBedrooms[index] = newInput;
+    setBedrooms(newBedrooms);
+  }
+
+  const getBedroomsDict = () => {
+    const bedroomDic = {};
+    let i = 1;
+    for (const def in bedrooms) {
+      bedroomDic['Bedroom ' + i] = bedrooms[def];
+      i += 1
+    }
+    return bedroomDic;
+  }
+
+  const handleChange = (prop) => (event) => {
+    setListingDetails({ ...listingDetails, [prop]: event.target.value })
+  }
+
+  const handleAddressChange = (prop) => (event) => {
+    const address = listingDetails.address;
+    address[prop] = event.target.value;
+    setListingDetails({ ...listingDetails, address: address });
+  }
+
+  const handleMetadataChange = (prop) => (event) => {
+    const metadata = listingDetails.metadata;
+    metadata[prop] = event.target.value;
+    setListingDetails({ ...listingDetails, metadata: metadata });
+  }
+
+  React.useEffect(() => {
+    updateListingDetails(id, setListingDetails);
+  }, []);
+
+  console.log(listingDetails)
   // async function getListingInfo (prop) {
   //   const response = await myFetch('GET', 'listings/' + prop.id, null, null)
   //   console.log(response)
@@ -78,9 +159,10 @@ const EditButton = (id) => {
             id="title"
             label="Title"
             type="text"
+            value={listingDetails.title}
             fullWidth
             variant="standard"
-            onChange={(e) => setTitle(e.target.value)}
+            onChange={handleChange('title')}
           />
           <TextField
             autoFocus
@@ -88,9 +170,10 @@ const EditButton = (id) => {
             id="street"
             label="Street"
             type="text"
+            value={listingDetails.address.street}
             fullWidth
             variant="standard"
-            onChange={(e) => setStreet(e.target.value)}
+            onChange={handleAddressChange('street')}
           />
           <TextField
             autoFocus
@@ -99,8 +182,9 @@ const EditButton = (id) => {
             label="City"
             type="text"
             fullWidth
+            value={listingDetails.address.city}
             variant="standard"
-            onChange={(e) => setCity(e.target.value)}
+            onChange={handleAddressChange('city')}
           />
           <TextField
             autoFocus
@@ -110,7 +194,8 @@ const EditButton = (id) => {
             type="text"
             fullWidth
             variant="standard"
-            onChange={(e) => setState(e.target.value)}
+            value={listingDetails.address.state}
+            onChange={handleAddressChange('state')}
           />
           <TextField
             autoFocus
@@ -120,7 +205,8 @@ const EditButton = (id) => {
             type="number"
             fullWidth
             variant="standard"
-            onChange={(e) => setPostcode(e.target.value)}
+            value={listingDetails.address.postcode}
+            onChange={handleAddressChange('postcode')}
           />
           <TextField
             autoFocus
@@ -130,7 +216,8 @@ const EditButton = (id) => {
             type="number"
             fullWidth
             variant="standard"
-            onChange={(e) => setPrice(e.target.value)}
+            value={listingDetails.price}
+            onChange={handleChange('price')}
           />
           <TextField
             autoFocus
@@ -140,7 +227,8 @@ const EditButton = (id) => {
             type="text"
             fullWidth
             variant="standard"
-            onChange={(e) => setThumbnail(e.target.value)}
+            value={listingDetails.thumbnail}
+            onChange={handleChange('thumbnail')}
           />
           <TextField
             autoFocus
@@ -150,7 +238,8 @@ const EditButton = (id) => {
             type="number"
             fullWidth
             variant="standard"
-            onChange={(e) => setBathrooms(e.target.value)}
+            value={listingDetails.metadata.bathrooms}
+            onChange={handleMetadataChange('bathrooms')}
           />
           <TextField
             autoFocus
@@ -160,7 +249,8 @@ const EditButton = (id) => {
             type="text"
             fullWidth
             variant="standard"
-            onChange={(e) => setPropType(e.target.value)}
+            value={listingDetails.metadata.propType}
+            onChange={handleMetadataChange('propType')}
           />
           <TextField
             autoFocus
@@ -170,7 +260,8 @@ const EditButton = (id) => {
             type="text"
             fullWidth
             variant="standard"
-            onChange={(e) => setAmenities(e.target.value)}
+            value={listingDetails.metadata.amenities}
+            onChange={handleMetadataChange('amenities')}
           />
           <TextField
             autoFocus
@@ -180,27 +271,39 @@ const EditButton = (id) => {
             type="number"
             fullWidth
             variant="standard"
-            onChange={(e) => setBeds(e.target.value)}
+            value={listingDetails.metadata.beds}
+            onChange={handleMetadataChange('beds')}
           />
+          {console.log(bedrooms)}
+          {bedrooms.map((bedroom, idx) => {
+            console.log('a')
+            return <BedroomInput
+              key={bedroom + idx}
+              idx={idx}
+              state={bedroom}
+              setState={updateBedrooms}
+            />
+          })}
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
           <Button onClick={() => editListing({
             id: id.id,
-            title: title,
+            title: listingDetails.title,
             address: {
-              street: street,
-              city: city,
-              state: state,
-              postcode: postcode,
+              street: listingDetails.address.street,
+              city: listingDetails.address.city,
+              state: listingDetails.address.state,
+              postcode: listingDetails.address.postcode,
             },
-            price: price,
-            thumbnail: thumbnail,
+            price: listingDetails.price,
+            thumbnail: listingDetails.thumbnail,
             metadata: {
-              bathrooms: bathrooms,
-              beds: beds,
-              propType: propType,
-              amenities: amenities
+              bathrooms: listingDetails.metadata.bathrooms,
+              beds: listingDetails.metadata.beds,
+              bedrooms: getBedroomsDict(),
+              propType: listingDetails.metadata.propType,
+              amenities: listingDetails.metadata.amenities
             }
           })}>
             Edit

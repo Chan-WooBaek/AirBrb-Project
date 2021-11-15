@@ -205,7 +205,6 @@ const CreateListingForm = () => {
               setState={updateBedrooms}
             />
           })}
-        {console.log(getBedrooms())}
         </DialogContent>
         <DialogActions>
           <Button onClick={addBedrooms}>Add Bedroom</Button>
