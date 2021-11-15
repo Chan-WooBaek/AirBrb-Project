@@ -2,6 +2,12 @@ import React from 'react';
 import myFetch from '../components/fetcher';
 import LogoutButton from '../components/logoutButton';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+
+RegisterScreen.propTypes = {
+  isLoggedIn: PropTypes.bool,
+  setLoggedIn: PropTypes.func
+}
 
 const RegisterForm = (e) => {
   console.log();
@@ -24,7 +30,7 @@ const RegisterForm = (e) => {
     })
 }
 
-export default function RegisterScreen (isLoggedIn, setLoggedIn) {
+export default function RegisterScreen ({ isLoggedIn, setLoggedIn }) {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [confirmPassword, setConfirmPassword] = React.useState('');

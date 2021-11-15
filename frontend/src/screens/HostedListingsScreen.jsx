@@ -4,8 +4,14 @@ import EditButton from '../components/EditButton';
 import LogoutButton from '../components/logoutButton';
 import { Link } from 'react-router-dom';
 import ListingsDisplay from '../components/ListingsDisplay';
+import PropTypes from 'prop-types';
 
-const HostedListingsScreen = (isLoggedIn, setLoggedIn) => {
+HostedListingsScreen.propTypes = {
+  isLoggedIn: PropTypes.bool,
+  setLoggedIn: PropTypes.func
+}
+
+export default function HostedListingsScreen ({ isLoggedIn, setLoggedIn }) {
   return (
     <div>
       HostedListingsScreen
@@ -13,7 +19,7 @@ const HostedListingsScreen = (isLoggedIn, setLoggedIn) => {
       <EditButton id={354395729}></EditButton>
       {isLoggedIn
         ? <>
-            <LogoutButton setLoggedIn={setLoggedIn}></LogoutButton>
+            <LogoutButton isLoggedIn={isLoggedIn} setLoggedIn={setLoggedIn}></LogoutButton>
             <Link to="/">Listings</Link>
             <Link to="/hostedListings">MyListings</Link>
             <ListingsDisplay></ListingsDisplay>
@@ -25,5 +31,3 @@ const HostedListingsScreen = (isLoggedIn, setLoggedIn) => {
     </div>
   );
 }
-
-export default HostedListingsScreen;
