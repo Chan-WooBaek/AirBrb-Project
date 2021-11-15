@@ -9,7 +9,7 @@ import HostedListingsScreen from './screens/HostedListingsScreen';
 import EditButton from './components/EditButton';
 
 function App () {
-  const [isLoggedIn, setLoggedIn] = React.useState(false);
+  const [isLoggedIn, setLoggedIn] = React.useState(localStorage.getItem('isLoggedIn') === 'true');
   return (
     <>
       <Router>
