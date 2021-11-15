@@ -45,7 +45,7 @@ export default function ColumnGroupingTable () {
               code: hostedIdList[idIndex],
               Buttons: <>
                 <DeleteHostedButton id={hostedIdList[idIndex]}/>
-                <LiveHostedButton></LiveHostedButton>
+                <LiveHostedButton id={hostedIdList[idIndex]}></LiveHostedButton>
               </>,
             })
             idIndex++;

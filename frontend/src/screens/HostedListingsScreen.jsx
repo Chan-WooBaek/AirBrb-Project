@@ -5,15 +5,15 @@ import LogoutButton from '../components/logoutButton';
 import { Link } from 'react-router-dom';
 import ListingsDisplay from '../components/ListingsDisplay';
 
-const HostedListingsScreen = () => {
+const HostedListingsScreen = (isLoggedIn, setLoggedIn) => {
   return (
     <div>
       HostedListingsScreen
       <CreateListingForm></CreateListingForm>
       <EditButton id={354395729}></EditButton>
-      {localStorage.getItem('token') !== 'null'
+      {isLoggedIn
         ? <>
-            <LogoutButton></LogoutButton>
+            <LogoutButton setLoggedIn={setLoggedIn}></LogoutButton>
             <Link to="/">Listings</Link>
             <Link to="/hostedListings">MyListings</Link>
             <ListingsDisplay></ListingsDisplay>
