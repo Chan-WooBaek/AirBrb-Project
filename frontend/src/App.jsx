@@ -24,7 +24,7 @@ function App () {
           <Route path="/register" element={<RegisterScreen isLoggedIn={isLoggedIn} setLoggedIn={setLoggedIn}/>}></Route>
           <Route path ="/hostedListings" element={<HostedListingsScreen isLoggedIn={isLoggedIn} setLoggedIn={setLoggedIn}/>}></Route>
           {/* <Route path = "/hostedListings/354395729" element={<EditButton id={354395729}/>}></Route> */}
-          <Route path = "/hostedListings/:id" element={<EditButton/>}></Route>
+          <Route path = "/listings/:id" element={<EditButton/>}></Route>
           <Route path ="/" element={<Navigate replace to="/listings"/>}></Route>
         </Routes>
       </Router>

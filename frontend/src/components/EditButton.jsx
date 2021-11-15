@@ -10,8 +10,8 @@ import DialogTitle from '@mui/material/DialogTitle';
 import BedroomInput from './BedroomInput';
 // import getListingDetails from '../utils/helpers';
 // import { StoreContext } from '../utils/store';
-// import { useNavigate } from 'react-router-dom';
-// import { useParams } from 'react-router';
+import { useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router';
 
 const editListing = (prop) => {
   console.log(prop.title);
@@ -34,20 +34,24 @@ const editListing = (prop) => {
 }
 
 async function updateListingDetails (listingId, setListingDetails) {
-  const response = await myFetch('GET', `listings/${listingId.id}`, null);
+  console.log('SECOND ID: ' + listingId);
+  const response = await myFetch('GET', `listings/${listingId}`, null);
+  console.log('aaaaaaaaaaaaaaaaaaa');
+  console.log(response);
+  console.log(response.listing);
   setListingDetails(response.listing);
   // console.log(response.listing);
 }
 
-const EditButton = (id) => {
-  // const params = useParams();
-  // const id = params.id;
-  const [open, setOpen] = React.useState(false);
-  // const handleEditClick = useNavigate();
-
+const EditButton = () => {
+  const params = useParams();
+  const id = params.id;
+  const [open, setOpen] = React.useState(true);
+  const handleEditClick = useNavigate();
+  console.log('THIS IS THE ID: ' + id)
   const handleClickOpen = () => {
     setOpen(true);
-    // handleEditClick(`../hostedListings/${id}`, { replace: true })
+    handleEditClick(`../hostedListings/${id}`, { replace: true })
   };
 
   const handleClose = () => {
@@ -288,7 +292,7 @@ const EditButton = (id) => {
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
           <Button onClick={() => editListing({
-            id: id.id,
+            id: id,
             title: listingDetails.title,
             address: {
               street: listingDetails.address.street,
