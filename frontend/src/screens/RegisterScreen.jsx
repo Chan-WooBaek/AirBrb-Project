@@ -13,7 +13,7 @@ const RegisterForm = (e) => {
   myFetch('POST', 'user/auth/register', null, body)
     .then((data) => {
       localStorage.setItem('token', data.token);
-      localStorage.setItem('isLoggedIn', true);
+      localStorage.setItem('user', e.email);
       window.location.reload();
       console.log('Successfully registered new user');
     })
