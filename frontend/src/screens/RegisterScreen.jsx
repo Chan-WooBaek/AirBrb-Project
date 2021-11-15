@@ -2,6 +2,12 @@ import React from 'react';
 import myFetch from '../components/fetcher';
 import LogoutButton from '../components/logoutButton';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+
+RegisterScreen.propTypes = {
+  isLoggedIn: PropTypes.bool,
+  setLoggedIn: PropTypes.func
+}
 
 const RegisterForm = (e) => {
   console.log();
@@ -14,16 +20,17 @@ const RegisterForm = (e) => {
     .then((data) => {
       localStorage.setItem('token', data.token);
       localStorage.setItem('user', e.email);
-      window.location.reload();
+      e.setLoggedIn(false)
       console.log('Successfully registered new user');
     })
     .catch((data) => {
       alert('Email already registered');
       console.log('Not successful in registering new user');
+      e.setLoggedIn(false)
     })
 }
 
-const RegisterScreen = () => {
+export default function RegisterScreen ({ isLoggedIn, setLoggedIn }) {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [confirmPassword, setConfirmPassword] = React.useState('');
@@ -35,23 +42,24 @@ const RegisterScreen = () => {
 
   return (
     <div>
-      <h1>Register Form</h1>
-      Email<input type="text" onChange={(e) => setEmail(e.target.value)} /><br/>
-      Password<input type="text" onChange={(e) => setPassword(e.target.value)} /><br/>
-      ConfirmPassword<input type="text" onChange={(e) => setConfirmPassword(e.target.value)} /><br/>
-      <div>{password !== confirmPassword ? "passswords don't match" : 'passwords match'}</div>
-      Name<input type="text" onChange={(e) => setName(e.target.value)} /><br/>
-      <button onClick={() => RegisterForm({ email: email, password: password, confirmPassword: confirmPassword, name: name })}>Submit</button>
-      {localStorage.getItem('token') !== 'null'
+      {console.log('isLoggedin state is ' + isLoggedIn)}
+      {isLoggedIn
         ? <>
-            <LogoutButton></LogoutButton>
+            Registered
+            <LogoutButton setLoggedIn={setLoggedIn}></LogoutButton>
             <Link to="/">Listings</Link>
             <Link to="/hostedListings">MyListings</Link>
           </>
-        : 'Not LoggedIn'
+        : <>
+            <h1>Register Form</h1>
+            Email<input type="text" onChange={(e) => setEmail(e.target.value)} /><br/>
+            Password<input type="text" onChange={(e) => setPassword(e.target.value)} /><br/>
+            ConfirmPassword<input type="text" onChange={(e) => setConfirmPassword(e.target.value)} /><br/>
+            <div>{password !== confirmPassword ? "passswords don't match" : 'passwords match'}</div>
+            Name<input type="text" onChange={(e) => setName(e.target.value)} /><br/>
+            <button onClick={() => RegisterForm({ email: email, password: password, confirmPassword: confirmPassword, name: name, loggedIn: isLoggedIn, setLoggedIn: setLoggedIn })}>Submit</button>
+          </>
       }
     </div>
   );
 }
-
-export default RegisterScreen;

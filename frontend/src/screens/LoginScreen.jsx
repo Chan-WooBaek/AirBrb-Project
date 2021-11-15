@@ -2,6 +2,7 @@ import React from 'react';
 import myFetch from '../components/fetcher';
 import LogoutButton from '../components/logoutButton';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 const LoginForm = (e) => {
   console.log(e);
@@ -14,7 +15,8 @@ const LoginForm = (e) => {
       console.log('Successfully logged in');
       localStorage.setItem('token', data.token);
       localStorage.setItem('user', e.email);
-      window.location.reload();
+      e.setLoggedIn(true);
+      console.log(e.loggedIn)
       // (localStorage.getItem('token')) to get token
     })
     .catch((data) => {
@@ -22,25 +24,30 @@ const LoginForm = (e) => {
     })
 }
 
-const LoginScreen = () => {
+LoginScreen.propTypes = {
+  isLoggedIn: PropTypes.bool,
+  setLoggedIn: PropTypes.func
+}
+
+export default function LoginScreen ({ isLoggedIn, setLoggedIn }) {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   return (
     <div>
-      <h1>Login Form</h1>
-      Email<input type="text" onChange={(e) => setEmail(e.target.value)} /><br/>
-      Password<input type="text" onChange={(e) => setPassword(e.target.value)} /><br/>
-      <button onClick={() => LoginForm({ email: email, password: password })}>Submit</button>
-      {localStorage.getItem('token') !== 'null'
+      {isLoggedIn
         ? <>
-            <LogoutButton></LogoutButton>
+            LoggedIn
+            <LogoutButton isLoggedIn={isLoggedIn} setLoggedIn={setLoggedIn}></LogoutButton>
             <Link to="/">Listings</Link>
             <Link to="/hostedListings">MyListings</Link>
           </>
-        : 'Not LoggedIn'
+        : <>
+            <h1>Login Form</h1>
+            Email<input type="text" onChange={(e) => setEmail(e.target.value)} /><br/>
+            Password<input type="text" onChange={(e) => setPassword(e.target.value)} /><br/>
+            <button onClick={() => LoginForm({ email: email, password: password, isLoggedIn: isLoggedIn, setLoggedIn: setLoggedIn })}>Submit</button>
+          </>
       }
     </div>
   );
 }
-
-export default LoginScreen;

@@ -9,6 +9,7 @@ import HostedListingsScreen from './screens/HostedListingsScreen';
 import EditButton from './components/EditButton';
 
 function App () {
+  const [isLoggedIn, setLoggedIn] = React.useState(false);
   return (
     <>
       <Router>
@@ -18,10 +19,10 @@ function App () {
         <Link to="/hostedListings">Hosted Listings</Link>
 
         <Routes>
-          <Route path="/listings" element={<ListingsScreen/>}></Route>
-          <Route path="/login" element={<LoginScreen/>}></Route>
-          <Route path="/register" element={<RegisterScreen/>}></Route>
-          <Route path ="/hostedListings" element={<HostedListingsScreen/>}></Route>
+          <Route path="/listings" element={<ListingsScreen isLoggedIn={isLoggedIn} setLoggedIn={setLoggedIn}/>}></Route>
+          <Route path="/login" element={<LoginScreen isLoggedIn={isLoggedIn} setLoggedIn={setLoggedIn}/>}></Route>
+          <Route path="/register" element={<RegisterScreen isLoggedIn={isLoggedIn} setLoggedIn={setLoggedIn}/>}></Route>
+          <Route path ="/hostedListings" element={<HostedListingsScreen isLoggedIn={isLoggedIn} setLoggedIn={setLoggedIn}/>}></Route>
           {/* <Route path = "/hostedListings/354395729" element={<EditButton id={354395729}/>}></Route> */}
           <Route path = "/hostedListings/:id" element={<EditButton/>}></Route>
           <Route path ="/" element={<Navigate replace to="/listings"/>}></Route>
