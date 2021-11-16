@@ -56,6 +56,7 @@ const EditButton = () => {
 
   const handleClose = () => {
     setOpen(false);
+    handleEditClick('../hostedListings', { replace: true })
   };
 
   const [listingDetails, setListingDetails] = React.useState({
