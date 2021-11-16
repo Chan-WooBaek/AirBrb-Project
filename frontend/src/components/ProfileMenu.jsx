@@ -63,7 +63,7 @@ export default function BasicMenu ({ isLoggedIn, setLoggedIn }) {
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
       >
-        <AccountCircleIcon></AccountCircleIcon>
+        <AccountCircleIcon ></AccountCircleIcon>
       </Button>
       <Menu
         id="basic-menu"

@@ -3,7 +3,8 @@ import CreateListingForm from '../screens/CreateListingScreen';
 // import EditButton from '../components/EditButton';
 import HostedListingsDisplay from '../components/HostedListingsDisplay';
 import PropTypes from 'prop-types';
-import BasicMenu from '../components/ProfileMenu'
+import BasicMenu from '../components/ProfileMenu';
+import SearchAppBar from '../components/SearchAppBar';
 
 HostedListingsScreen.propTypes = {
   isLoggedIn: PropTypes.bool,
@@ -13,8 +14,7 @@ HostedListingsScreen.propTypes = {
 export default function HostedListingsScreen ({ isLoggedIn, setLoggedIn }) {
   return (
     <div>
-      HostedListingsScreen
-      {/* <EditButton id={202301096}></EditButton> */}
+      <SearchAppBar isLoggedIn={isLoggedIn} setLoggedIn={setLoggedIn}></SearchAppBar>
       {isLoggedIn
         ? <>
             <BasicMenu isLoggedIn={isLoggedIn} setLoggedIn={setLoggedIn}></BasicMenu>
