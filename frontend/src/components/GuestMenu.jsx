@@ -4,7 +4,6 @@ import MenuItem from '@mui/material/MenuItem';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import myFetch from './fetcher';
 import IconButton from '@mui/material/IconButton';
 
 ProfileMenu.propTypes = {
@@ -27,34 +26,17 @@ export default function ProfileMenu ({ isLoggedIn, setLoggedIn }) {
     moveTo('../listings', { replace: true })
   }
 
-  const handleHostedListings = () => {
+  const handleRegister = () => {
     setAnchorEl(null);
-    moveTo('../hostedListings', { replace: true })
+    moveTo('../register', { replace: true })
+  }
+
+  const handleLogin = () => {
+    setAnchorEl(null);
+    moveTo('../login', { replace: true })
   }
 
   const moveTo = useNavigate();
-
-  function handleLoggingOut (isLoggedIn, setLoggedIn) {
-    setAnchorEl(null);
-    const token = localStorage.getItem('token');
-    myFetch('POST', 'user/auth/logout', token, null)
-      .then((data) => {
-        console.log('Successfully logged out');
-        localStorage.setItem('token', null);
-        localStorage.setItem('user', null);
-        localStorage.setItem('isLoggedIn', false);
-        setLoggedIn(false);
-      })
-      .catch((data) => {
-        console.log('Not successful in logging out');
-        console.log(isLoggedIn)
-        localStorage.setItem('token', null);
-        localStorage.setItem('user', null);
-        localStorage.setItem('isLoggedIn', false);
-        setLoggedIn(false);
-      })
-    moveTo('../listings', { replace: true });
-  }
 
   return (
     <div>
@@ -78,8 +60,8 @@ export default function ProfileMenu ({ isLoggedIn, setLoggedIn }) {
         }}
       >
         <MenuItem onClick={handleListings}>Listings</MenuItem>
-        <MenuItem onClick={handleHostedListings}>MyListings</MenuItem>
-        <MenuItem onClick={() => handleLoggingOut(isLoggedIn, setLoggedIn)}>Logout</MenuItem>
+        <MenuItem onClick={handleRegister}>Register</MenuItem>
+        <MenuItem onClick={handleLogin}>Login</MenuItem>
       </Menu>
     </div>
   );
