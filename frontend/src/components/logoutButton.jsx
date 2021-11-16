@@ -17,7 +17,6 @@ function loggingOut (isLoggedIn, setLoggedIn) {
     })
     .catch((data) => {
       console.log('Not successful in logging out');
-      console.log(isLoggedIn);
       setLoggedIn(false);
     })
 }

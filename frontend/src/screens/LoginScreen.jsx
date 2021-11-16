@@ -1,8 +1,7 @@
 import React from 'react';
 import myFetch from '../components/fetcher';
-import LogoutButton from '../components/logoutButton';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import BasicMenu from '../components/ProfileMenu'
 
 const LoginForm = (e) => {
   console.log(e);
@@ -15,8 +14,8 @@ const LoginForm = (e) => {
       console.log('Successfully logged in');
       localStorage.setItem('token', data.token);
       localStorage.setItem('user', e.email);
+      localStorage.setItem('isLoggedIn', true);
       e.setLoggedIn(true);
-      console.log(e.loggedIn)
       // (localStorage.getItem('token')) to get token
     })
     .catch((data) => {
@@ -37,9 +36,7 @@ export default function LoginScreen ({ isLoggedIn, setLoggedIn }) {
       {isLoggedIn
         ? <>
             LoggedIn
-            <LogoutButton isLoggedIn={isLoggedIn} setLoggedIn={setLoggedIn}></LogoutButton>
-            <Link to="/">Listings</Link>
-            <Link to="/hostedListings">MyListings</Link>
+            <BasicMenu isLoggedIn={isLoggedIn} setLoggedIn={setLoggedIn}></BasicMenu>
           </>
         : <>
             <h1>Login Form</h1>
