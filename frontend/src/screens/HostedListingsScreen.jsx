@@ -13,6 +13,14 @@ HostedListingsScreen.propTypes = {
 }
 
 export default function HostedListingsScreen ({ isLoggedIn, setLoggedIn }) {
+  const [display, setDisplay] = React.useState(false);
+  function handleDropDown () {
+    if (display) {
+      setDisplay(false)
+    } else {
+      setDisplay(true)
+    }
+  }
   return (
     <div>
       HostedListingsScreen
@@ -24,7 +32,13 @@ export default function HostedListingsScreen ({ isLoggedIn, setLoggedIn }) {
             <Link to="/hostedListings">MyListings</Link>
             <CreateListingForm></CreateListingForm>
             <HostedListingsDisplay></HostedListingsDisplay>
-            <AccountCircleIcon onClick={() => console.log('pressed')}></AccountCircleIcon>
+            <AccountCircleIcon onClick={() => handleDropDown()}></AccountCircleIcon>
+            {display
+              ? <>
+                  <div>Hello</div>
+                </>
+              : <></>
+            }
           </>
         : <>
             {'Not LoggedIn'}
