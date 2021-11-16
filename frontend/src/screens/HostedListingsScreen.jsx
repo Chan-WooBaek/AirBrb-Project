@@ -1,6 +1,5 @@
 import React from 'react';
 import CreateListingForm from '../screens/CreateListingScreen';
-// import EditButton from '../components/EditButton';
 import LogoutButton from '../components/logoutButton';
 import { Link } from 'react-router-dom';
 import HostedListingsDisplay from '../components/HostedListingsDisplay';
@@ -16,7 +15,6 @@ export default function HostedListingsScreen ({ isLoggedIn, setLoggedIn }) {
     <div>
       HostedListingsScreen
       <CreateListingForm></CreateListingForm>
-      {/* <EditButton id={202301096}></EditButton> */}
       {isLoggedIn
         ? <>
             <LogoutButton isLoggedIn={isLoggedIn} setLoggedIn={setLoggedIn}></LogoutButton>

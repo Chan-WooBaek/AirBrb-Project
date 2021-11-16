@@ -121,6 +121,12 @@ const EditButton = () => {
     setBedrooms(newBedrooms);
   }
 
+  const addBedrooms = () => {
+    const newBedrooms = [...bedrooms];
+    newBedrooms.push('');
+    setBedrooms(newBedrooms);
+  }
+
   const getBedroomsDict = () => {
     const bedroomDic = {};
     let i = 1;
@@ -271,6 +277,7 @@ const EditButton = () => {
           })}
         </DialogContent>
         <DialogActions>
+        <Button onClick={addBedrooms}>Add Bedroom</Button>
           <Button onClick={handleClose}>Cancel</Button>
           <Button onClick={() => editListing({
             id: id,
