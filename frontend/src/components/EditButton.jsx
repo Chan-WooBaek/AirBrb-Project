@@ -98,13 +98,11 @@ const EditButton = () => {
     for (const bed in bedroomsDict) {
       bedrooms.push(bedroomsDict[bed]);
     }
-    console.log(details);
     return bedrooms;
   }
 
   async function updateListingDetails (listingId, setListingDetails) {
     const response = await myFetch('GET', `listings/${listingId}`, null);
-    console.log(response.listing)
     setListingDetails(response.listing);
     setBedrooms(getBedroomsList(response.listing));
   }
@@ -142,7 +140,6 @@ const EditButton = () => {
         <DialogContent>
           <DialogContentText>
           </DialogContentText>
-          {console.log(listingDetails)}
           <TextField
             autoFocus
             margin="dense"
@@ -264,8 +261,6 @@ const EditButton = () => {
             value={listingDetails.metadata.beds}
             onChange={handleMetadataChange('beds')}
           />
-          {/* {console.log('bedrooms: ')}
-          {console.log(bedrooms)} */}
           {bedrooms.map((bedroom, idx) => {
             return <BedroomInput
               key={bedroom + idx}
