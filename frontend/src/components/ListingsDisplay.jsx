@@ -80,7 +80,9 @@ export default function ColumnGroupingTable () {
                       const value = row[column.id];
                       return (
                         column.id === 'content'
-                          ? <TableCell key={column.id} align={column.align} onClick={() => handleRowClick('../listings', { replace: true })} onMouseEnter={() => handleRowHover()} style={{ cursor: cursor }}>
+                          ? <TableCell key={column.id} align={column.align} onClick={() => handleRowClick('../listings', { replace: true })}
+                              onMouseEnter={() => handleRowHover()} style={{ cursor: cursor }}
+                            >
                             {column.format && typeof value === 'number'
                               ? column.format(value)
                               : value}
