@@ -8,26 +8,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import BedroomInput from '../components/BedroomInput';
-
-const createListing = (prop) => {
-  console.log(prop.title);
-  if (prop.title === '' || prop.address === {} || prop.price === '' || prop.thumbnail === '' || prop.metadata === {}) {
-    alert('Please fill in all blank spaces')
-  }
-  const body = {
-    title: prop.title,
-    address: prop.address,
-    price: prop.price,
-    thumbnail: prop.thumbnail,
-    metadata: prop.metadata
-  }
-  const token = localStorage.getItem('token');
-  myFetch('POST', 'listings/new', token, body)
-    .then((data) => {
-      console.log(data)
-    })
-    .catch(err => console.log(err))
-}
+import { useNavigate } from 'react-router-dom';
 
 const CreateListingForm = () => {
   const [open, setOpen] = React.useState(false);
@@ -40,6 +21,30 @@ const CreateListingForm = () => {
     setBedrooms([''])
     setOpen(false);
   };
+
+  const handleEditClick = useNavigate();
+
+  const createListing = (prop) => {
+    console.log(prop.title);
+    if (prop.title === '' || prop.address === {} || prop.price === '' || prop.thumbnail === '' || prop.metadata === {}) {
+      alert('Please fill in all blank spaces')
+    }
+    const body = {
+      title: prop.title,
+      address: prop.address,
+      price: prop.price,
+      thumbnail: prop.thumbnail,
+      metadata: prop.metadata
+    }
+    const token = localStorage.getItem('token');
+    myFetch('POST', 'listings/new', token, body)
+      .then((data) => {
+        console.log(data)
+      })
+      .catch(err => console.log(err))
+    handleEditClick('../hostedListings/', { replace: true })
+    setOpen(false);
+  }
 
   const [title, setTitle] = React.useState('');
   const [street, setStreet] = React.useState('');

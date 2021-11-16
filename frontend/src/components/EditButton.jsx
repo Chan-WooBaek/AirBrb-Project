@@ -14,7 +14,6 @@ import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router';
 
 const editListing = (prop) => {
-  console.log(prop.title);
   if (prop.title === '' || prop.address === {} || prop.price === '' || prop.thumbnail === '' || prop.metadata === {}) {
     alert('Please fill in all blank spaces')
   }
@@ -28,19 +27,9 @@ const editListing = (prop) => {
   const token = localStorage.getItem('token');
   myFetch('PUT', 'listings/' + prop.id, token, body)
     .then((data) => {
-      console.log(data)
+      // handleClose();
     })
     .catch(err => console.log(err))
-}
-
-async function updateListingDetails (listingId, setListingDetails) {
-  console.log('SECOND ID: ' + listingId);
-  const response = await myFetch('GET', `listings/${listingId}`, null);
-  console.log('aaaaaaaaaaaaaaaaaaa');
-  console.log(response);
-  console.log(response.listing);
-  setListingDetails(response.listing);
-  // console.log(response.listing);
 }
 
 const EditButton = () => {
@@ -48,7 +37,6 @@ const EditButton = () => {
   const id = params.id;
   const [open, setOpen] = React.useState(true);
   const handleEditClick = useNavigate();
-  console.log('THIS IS THE ID: ' + id)
   const handleClickOpen = () => {
     setOpen(true);
     handleEditClick(`../hostedListings/${id}`, { replace: true })
@@ -56,6 +44,7 @@ const EditButton = () => {
 
   const handleClose = () => {
     setOpen(false);
+    handleEditClick('../hostedListings', { replace: true })
   };
 
   const [listingDetails, setListingDetails] = React.useState({
@@ -85,39 +74,7 @@ const EditButton = () => {
     published: false,
     postedOn: ''
   })
-
-  const getBedroomsList = () => {
-    const bedrooms = [];
-    const bedroomsDict = listingDetails.metadata.bedrooms;
-    for (const bed in bedroomsDict) {
-      bedrooms.push(bedroomsDict[bed]);
-    }
-    // setBedrooms(bedrooms);
-    return bedrooms;
-  }
   const [bedrooms, setBedrooms] = React.useState(['']);
-  React.useEffect(() => {
-    setBedrooms(getBedroomsList);
-  }, []);
-  // React.useEffect(() => {
-  //   updateListingDetails(id, setListingDetails);
-  // }, []);
-
-  const updateBedrooms = (index, newInput) => {
-    const newBedrooms = [...bedrooms];
-    newBedrooms[index] = newInput;
-    setBedrooms(newBedrooms);
-  }
-
-  const getBedroomsDict = () => {
-    const bedroomDic = {};
-    let i = 1;
-    for (const def in bedrooms) {
-      bedroomDic['Bedroom ' + i] = bedrooms[def];
-      i += 1
-    }
-    return bedroomDic;
-  }
 
   const handleChange = (prop) => (event) => {
     setListingDetails({ ...listingDetails, [prop]: event.target.value })
@@ -135,18 +92,44 @@ const EditButton = () => {
     setListingDetails({ ...listingDetails, metadata: metadata });
   }
 
+  const getBedroomsList = (details) => {
+    const bedrooms = [];
+    const bedroomsDict = details.metadata.bedrooms;
+    for (const bed in bedroomsDict) {
+      bedrooms.push(bedroomsDict[bed]);
+    }
+    return bedrooms;
+  }
+
+  async function updateListingDetails (listingId, setListingDetails) {
+    const response = await myFetch('GET', `listings/${listingId}`, null);
+    setListingDetails(response.listing);
+    setBedrooms(getBedroomsList(response.listing));
+  }
+
   React.useEffect(() => {
     updateListingDetails(id, setListingDetails);
   }, []);
 
-  console.log(listingDetails)
-  // async function getListingInfo (prop) {
-  //   const response = await myFetch('GET', 'listings/' + prop.id, null, null)
-  //   console.log(response)
-  //   return response.json()
-  // }
+  // React.useEffect(() => {
+  //   setBedrooms(getBedroomsList);
+  // }, []);
 
-  // const [bedrooms, setBedrooms] = React.useState([''])
+  const updateBedrooms = (index, newInput) => {
+    const newBedrooms = [...bedrooms];
+    newBedrooms[index] = newInput;
+    setBedrooms(newBedrooms);
+  }
+
+  const getBedroomsDict = () => {
+    const bedroomDic = {};
+    let i = 1;
+    for (const def in bedrooms) {
+      bedroomDic['Bedroom ' + i] = bedrooms[def];
+      i += 1
+    }
+    return bedroomDic;
+  }
   return (
     <div>
       <Button variant="outlined" onClick={handleClickOpen}>
@@ -278,9 +261,7 @@ const EditButton = () => {
             value={listingDetails.metadata.beds}
             onChange={handleMetadataChange('beds')}
           />
-          {console.log(bedrooms)}
           {bedrooms.map((bedroom, idx) => {
-            console.log('a')
             return <BedroomInput
               key={bedroom + idx}
               idx={idx}
