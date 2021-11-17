@@ -18,7 +18,12 @@ export default function DatePicker ({ isLoggedIn, listingId, price }) {
   const [inValue, setInValue] = React.useState(new Date('2021-01-01T21:11:54'));
   const [outValue, setOutValue] = React.useState(new Date('2021-01-02T21:11:54'));
   // const [bookingSuccess, setBookingSuccess] = React.useState(2);
-
+  // const availabilities = []; 
+  // React.useEffect(() => {
+  //   const response = await myFetch('GET', `listings/${listingId}`, null);
+  //   availabilities = response.listing.availability
+  // }, []);
+ 
   const checkInHandleChange = (newValue) => {
     if (checkValidInDate(newValue)) {
       setInValue(newValue);
@@ -62,6 +67,7 @@ export default function DatePicker ({ isLoggedIn, listingId, price }) {
     const token = localStorage.getItem('token');
     myFetch('POST', `bookings/new/${listingId}`, token, body)
       .then(data => {
+        console.log(data)
       })
       .catch(err => {
         alert(err)
