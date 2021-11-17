@@ -11,6 +11,7 @@ import myFetch from './fetcher';
 import DeleteHostedButton from './DeleteHostedButton';
 import LiveHostedButton from './LiveHostedButton';
 import HostedListingDetails from './HostedListingDetail';
+import AvailabilityCalendar from '../components/AvailabilityCalendar';
 
 const columns = [
   { id: 'content', label: 'Content', minWidth: 500 },
@@ -40,6 +41,7 @@ export default function ColumnGroupingTable () {
               </>,
               code: hostedIdList[idIndex],
               Buttons: <>
+                <AvailabilityCalendar id={hostedIdList[idIndex]}></AvailabilityCalendar>
                 <DeleteHostedButton id={hostedIdList[idIndex]}/>
                 <LiveHostedButton id={hostedIdList[idIndex]}></LiveHostedButton>
               </>,
@@ -88,12 +90,12 @@ export default function ColumnGroupingTable () {
                       const value = row[column.id];
                       return (
                         column.id === 'content'
-                          ? <TableCell sx={{ width: '90%' }} key={column.id} align={column.align} onClick={() => editRoute(row.code)} onMouseEnter={() => handleRowHover()} style={{ cursor: cursor }}>
+                          ? <TableCell sx={{ width: '80vw' }} key={column.id} align={column.align} onClick={() => editRoute(row.code)} onMouseEnter={() => handleRowHover()} style={{ cursor: cursor }}>
                             {column.format && typeof value === 'number'
                               ? column.format(value)
                               : value}
                             </TableCell>
-                          : <TableCell sx={{ width: '10%' }} key={column.id} align={column.align}>
+                          : <TableCell sx={{ width: '20vw' }} key={column.id} align={column.align}>
                             {column.format && typeof value === 'number'
                               ? column.format(value)
                               : value}
