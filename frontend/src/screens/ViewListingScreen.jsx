@@ -81,7 +81,7 @@ function ViewListingScreen ({ isLoggedIn, setLoggedIn }) {
       <Box sx={{ display: 'flex', p: 1, m: 1, bgcolor: 'background.paper' }}>
         <p>{'Number of bedrooms: ' + Object.keys(details.metadata.bedrooms).length}</p>
       </Box>
-      <DatePicker></DatePicker>
+      <DatePicker isLoggedIn={isLoggedIn} listingId={id} price={details.price}></DatePicker>
       <Box sx={{ display: 'flex', p: 1, m: 1, bgcolor: 'background.paper' }}>
         {details.reviews.length
           ? <p>{'Reviews : ' + details.reviews[0]}</p>
