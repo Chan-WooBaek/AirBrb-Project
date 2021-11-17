@@ -62,7 +62,7 @@ export default function ColumnGroupingTable () {
   const handleRowClick = useNavigate();
 
   const editRoute = (id) => {
-    handleRowClick('../listings/' + id, { replace: true })
+    handleRowClick('../hostedListings/' + id, { replace: true })
   }
 
   const [cursor, setCursor] = React.useState('crosshair');

@@ -13,25 +13,6 @@ import BedroomInput from './BedroomInput';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router';
 
-const editListing = (prop) => {
-  if (prop.title === '' || prop.address === {} || prop.price === '' || prop.thumbnail === '' || prop.metadata === {}) {
-    alert('Please fill in all blank spaces')
-  }
-  const body = {
-    title: prop.title,
-    address: prop.address,
-    price: prop.price,
-    thumbnail: prop.thumbnail,
-    metadata: prop.metadata
-  }
-  const token = localStorage.getItem('token');
-  myFetch('PUT', 'listings/' + prop.id, token, body)
-    .then((data) => {
-      // handleClose();
-    })
-    .catch(err => console.log(err))
-}
-
 const EditButton = () => {
   const params = useParams();
   const id = params.id;
@@ -39,13 +20,32 @@ const EditButton = () => {
   const handleEditClick = useNavigate();
   const handleClickOpen = () => {
     setOpen(true);
-    handleEditClick(`../hostedListings/${id}`, { replace: true })
+    // handleEditClick(`../hostedListings/${id}`, { replace: true })
   };
 
   const handleClose = () => {
     setOpen(false);
     handleEditClick('../hostedListings', { replace: true })
   };
+
+  const editListing = (prop) => {
+    if (prop.title === '' || prop.address === {} || prop.price === '' || prop.thumbnail === '' || prop.metadata === {}) {
+      alert('Please fill in all blank spaces')
+    }
+    const body = {
+      title: prop.title,
+      address: prop.address,
+      price: prop.price,
+      thumbnail: prop.thumbnail,
+      metadata: prop.metadata
+    }
+    const token = localStorage.getItem('token');
+    myFetch('PUT', 'listings/' + prop.id, token, body)
+      .then((data) => {
+        handleClose();
+      })
+      .catch(err => console.log(err))
+  }
 
   const [listingDetails, setListingDetails] = React.useState({
     title: '',
@@ -118,6 +118,12 @@ const EditButton = () => {
   const updateBedrooms = (index, newInput) => {
     const newBedrooms = [...bedrooms];
     newBedrooms[index] = newInput;
+    setBedrooms(newBedrooms);
+  }
+
+  const addBedrooms = () => {
+    const newBedrooms = [...bedrooms];
+    newBedrooms.push('');
     setBedrooms(newBedrooms);
   }
 
@@ -271,6 +277,7 @@ const EditButton = () => {
           })}
         </DialogContent>
         <DialogActions>
+        <Button onClick={addBedrooms}>Add Bedroom</Button>
           <Button onClick={handleClose}>Cancel</Button>
           <Button onClick={() => editListing({
             id: id,

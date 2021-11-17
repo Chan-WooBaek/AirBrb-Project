@@ -1,5 +1,4 @@
 const myFetch = (method, path, token, body) => {
-  console.log('im fetchin');
   const requestOption = {
     method: method,
     headers: { 'Content-Type': 'application/json' },

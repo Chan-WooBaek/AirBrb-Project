@@ -66,6 +66,10 @@ export default function ColumnGroupingTable () {
     })
   }
 
+  const editRoute = (id) => {
+    handleRowClick('../listings/' + id, { replace: true })
+  }
+
   return (
     <Paper sx={{ width: '100%', position: 'absolute', bottom: '0px', height: '80%' }}>
       <TableContainer sx={{ height: '90%' }}>
@@ -80,7 +84,7 @@ export default function ColumnGroupingTable () {
                       const value = row[column.id];
                       return (
                         column.id === 'content'
-                          ? <TableCell key={column.id} align={column.align} onClick={() => handleRowClick('../listings', { replace: true })}
+                          ? <TableCell key={column.id} align={column.align} onClick={() => editRoute(row.code)}
                               onMouseEnter={() => handleRowHover()} style={{ cursor: cursor }}
                             >
                             {column.format && typeof value === 'number'
