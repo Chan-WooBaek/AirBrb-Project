@@ -8,6 +8,7 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import { useNavigate } from 'react-router-dom';
 import myFetch from './fetcher';
+import ListingDetails from './ListingDetail';
 
 const columns = [
   { id: 'content', label: 'Content', minWidth: 500 },
@@ -32,10 +33,8 @@ export default function ColumnGroupingTable () {
             if (res.published) {
               newRow.push({
                 content: <>
-                  <div>{'Title: ' + res.title}</div>
-                  <div>{'Thumbnail: '}<img src={res.thumbnail} /></div>
-                  <div>{'Reviews: ' + res.reviews}</div>
-                  <div>{'Price: ' + res.price}</div>
+                  <img src={res.thumbnail} style={{ width: '50%', height: '50vh' }} />
+                  <ListingDetails title={res.title} reviews={res.reviews} price={res.price} ></ListingDetails>
                 </>,
                 code: hostedIdList[idIndex],
               })
