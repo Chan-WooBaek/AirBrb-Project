@@ -7,7 +7,7 @@ import LoginScreen from './screens/LoginScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import HostedListingsScreen from './screens/HostedListingsScreen';
 import EditButton from './components/EditButton';
-import ViewListingSreen from './screens/ViewListingScreen';
+import ViewListingScreen from './screens/ViewListingScreen';
 
 function App () {
   const [isLoggedIn, setLoggedIn] = React.useState(localStorage.getItem('isLoggedIn') === 'true');
@@ -19,9 +19,9 @@ function App () {
           <Route path="/login" element={<LoginScreen isLoggedIn={isLoggedIn} setLoggedIn={setLoggedIn}/>}></Route>
           <Route path="/register" element={<RegisterScreen isLoggedIn={isLoggedIn} setLoggedIn={setLoggedIn}/>}></Route>
           <Route path ="/hostedListings" element={<HostedListingsScreen isLoggedIn={isLoggedIn} setLoggedIn={setLoggedIn}/>}></Route>
-          <Route path = "/listings/:id" element={<EditButton/>}></Route>
-          <Route path = "/list/415204074" element={<ViewListingSreen id={415204074}/>}></Route>
-          {/* <Route path = "/list/:id" element={<ViewListingSreen/>}></Route> */}
+          <Route path = "/hostedListings/:id" element={<EditButton/>}></Route>
+          {/* <Route path = "/list/415204074" element={<ViewListingSreen id={415204074}/>}></Route> */}
+          <Route path = "/listings/:id" element={<ViewListingScreen isLoggedIn={isLoggedIn} setLoggedIn={setLoggedIn}/>}></Route>
           <Route path ="/" element={<Navigate replace to="/listings"/>}></Route>
         </Routes>
       </Router>
