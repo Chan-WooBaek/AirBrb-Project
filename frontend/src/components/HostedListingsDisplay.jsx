@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import myFetch from './fetcher';
 import DeleteHostedButton from './DeleteHostedButton';
 import LiveHostedButton from './LiveHostedButton';
+import HostedListingDetails from './HostedListingDetail';
 
 const columns = [
   { id: 'content', label: 'Content', minWidth: 500 },
@@ -34,13 +35,8 @@ export default function ColumnGroupingTable () {
           for (const res of data) {
             newRow.push({
               content: <>
-                <div>{'Title: ' + res.title}</div>
-                <div>{'Property Type: ' + res.metadata.propType}</div>
-                <div>{'Bedrooms: ' + res.metadata.beds}</div>
-                <div>{'Bathrooms: ' + res.metadata.bathrooms}</div>
-                <div>{'Thumbnail: '}<img src={res.thumbnail} /></div>
-                <div>{'Reviews: ' + res.reviews}</div>
-                <div>{'Price: ' + res.price}</div>
+                <img src={res.thumbnail} style={{ width: '50%', height: '50vh' }} />
+                <HostedListingDetails title={res.title} property={res.metadata.propType} bedrooms={res.metadata.beds} bathrooms={res.metadata.bathrooms} reviews={res.reviews} price={res.price}/>
               </>,
               code: hostedIdList[idIndex],
               Buttons: <>
