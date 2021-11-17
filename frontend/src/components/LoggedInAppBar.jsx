@@ -52,16 +52,21 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 LoggedInAppBar.propTypes = {
   isLoggedIn: PropTypes.bool,
-  setLoggedIn: PropTypes.func
+  setLoggedIn: PropTypes.func,
+  searchString: PropTypes.string,
+  setSearchString: PropTypes.func,
 }
 
-export default function LoggedInAppBar ({ isLoggedIn, setLoggedIn }) {
+export default function LoggedInAppBar ({ isLoggedIn, setLoggedIn, searchString, setSearchString }) {
+  function handleChange (event) {
+    setSearchString(event.target.value)
+  }
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
           <ProfileMenu isLoggedIn={isLoggedIn} setLoggedIn={setLoggedIn}></ProfileMenu>
-          <Search>
+          <Search onChange={() => handleChange(event)}>
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
