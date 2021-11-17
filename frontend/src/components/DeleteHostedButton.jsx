@@ -13,7 +13,7 @@ const DeleteHostedButton = (id) => {
       })
   }
   return (
-    <Button variant="outlined" startIcon={<DeleteIcon />} onClick={() => deleting(id)}>Delete</Button>
+    <Button variant="outlined" startIcon={<DeleteIcon />} onClick={() => deleting(id)}>Delete Listing</Button>
   )
 }
 
