@@ -67,8 +67,8 @@ export default function ColumnGroupingTable () {
   }
 
   return (
-    <Paper sx={{ width: '100%' }}>
-      <TableContainer sx={{ maxHeight: 440 }}>
+    <Paper sx={{ width: '100%', position: 'absolute', bottom: '0px', height: '80%' }}>
+      <TableContainer sx={{ height: '90%' }}>
         <Table stickyHeader aria-label="sticky table">
           <TableBody>
             {rows
@@ -80,7 +80,9 @@ export default function ColumnGroupingTable () {
                       const value = row[column.id];
                       return (
                         column.id === 'content'
-                          ? <TableCell key={column.id} align={column.align} onClick={() => handleRowClick('../listings', { replace: true })} onMouseEnter={() => handleRowHover()} style={{ cursor: cursor }}>
+                          ? <TableCell key={column.id} align={column.align} onClick={() => handleRowClick('../listings', { replace: true })}
+                              onMouseEnter={() => handleRowHover()} style={{ cursor: cursor }}
+                            >
                             {column.format && typeof value === 'number'
                               ? column.format(value)
                               : value}

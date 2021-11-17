@@ -1,32 +1,13 @@
 import React from 'react';
 import myFetch from '../components/fetcher';
 import PropTypes from 'prop-types';
-import BasicMenu from '../components/ProfileMenu'
+import LoggedInAppBar from '../components/LoggedInAppBar';
+import GuestAppBar from '../components/GuestAppBar';
+import { useNavigate } from 'react-router-dom';
 
 RegisterScreen.propTypes = {
   isLoggedIn: PropTypes.bool,
   setLoggedIn: PropTypes.func
-}
-
-const RegisterForm = (e) => {
-  console.log();
-  const body = {
-    email: e.email,
-    password: e.password,
-    name: e.name,
-  }
-  myFetch('POST', 'user/auth/register', null, body)
-    .then((data) => {
-      localStorage.setItem('token', data.token);
-      localStorage.setItem('user', e.email);
-      e.setLoggedIn(false)
-      console.log('Successfully registered new user');
-    })
-    .catch((data) => {
-      alert('Email already registered');
-      console.log('Not successful in registering new user');
-      e.setLoggedIn(false)
-    })
 }
 
 export default function RegisterScreen ({ isLoggedIn, setLoggedIn }) {
@@ -39,15 +20,39 @@ export default function RegisterScreen ({ isLoggedIn, setLoggedIn }) {
     console.log('Passwords dont match');
   }
 
+  const moveTo = useNavigate();
+
+  function RegisterForm (e) {
+    const body = {
+      email: e.email,
+      password: e.password,
+      name: e.name,
+    }
+    myFetch('POST', 'user/auth/register', null, body)
+      .then((data) => {
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('user', e.email);
+        e.setLoggedIn(false)
+        console.log('Successfully registered new user');
+      })
+      .catch((data) => {
+        alert('Email already registered');
+        console.log('Not successful in registering new user');
+        e.setLoggedIn(false)
+      })
+
+    moveTo('../listings', { replace: true });
+  }
+
   return (
     <div>
       {console.log('isLoggedin state is ' + isLoggedIn)}
       {isLoggedIn
         ? <>
-            <BasicMenu isLoggedIn={isLoggedIn} setLoggedIn={setLoggedIn}></BasicMenu>
-            Registered
+            <LoggedInAppBar isLoggedIn={isLoggedIn} setLoggedIn={setLoggedIn}></LoggedInAppBar>
           </>
         : <>
+            <GuestAppBar></GuestAppBar>
             <h1>Register Form</h1>
             Email<input type="text" onChange={(e) => setEmail(e.target.value)} /><br/>
             Password<input type="text" onChange={(e) => setPassword(e.target.value)} /><br/>
