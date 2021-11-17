@@ -34,13 +34,8 @@ export default function ColumnGroupingTable () {
           for (const res of data) {
             newRow.push({
               content: <>
-                <div>{'Title: ' + res.title}</div>
-                <div>{'Property Type: ' + res.metadata.propType}</div>
-                <div>{'Bedrooms: ' + res.metadata.beds}</div>
-                <div>{'Bathrooms: ' + res.metadata.bathrooms}</div>
-                <div>{'Thumbnail: '}<img src={res.thumbnail} /></div>
-                <div>{'Reviews: ' + res.reviews}</div>
-                <div>{'Price: ' + res.price}</div>
+                <span style={{ height: '100%' }}><img src={res.thumbnail} /></span>
+                <span>{'Title: ' + res.title + 'Property Type: ' + res.metadata.propType + 'Bedrooms: ' + res.metadata.beds + 'Bathrooms: ' + res.metadata.bathrooms + 'Price: ' + res.price + 'Reviews: ' + res.reviews}</span>
               </>,
               code: hostedIdList[idIndex],
               Buttons: <>
