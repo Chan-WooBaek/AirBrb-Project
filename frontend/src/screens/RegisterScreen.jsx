@@ -1,8 +1,7 @@
 import React from 'react';
 import myFetch from '../components/fetcher';
-import LogoutButton from '../components/logoutButton';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import BasicMenu from '../components/ProfileMenu'
 
 RegisterScreen.propTypes = {
   isLoggedIn: PropTypes.bool,
@@ -45,10 +44,8 @@ export default function RegisterScreen ({ isLoggedIn, setLoggedIn }) {
       {console.log('isLoggedin state is ' + isLoggedIn)}
       {isLoggedIn
         ? <>
+            <BasicMenu isLoggedIn={isLoggedIn} setLoggedIn={setLoggedIn}></BasicMenu>
             Registered
-            <LogoutButton setLoggedIn={setLoggedIn}></LogoutButton>
-            <Link to="/">Listings</Link>
-            <Link to="/hostedListings">MyListings</Link>
           </>
         : <>
             <h1>Register Form</h1>

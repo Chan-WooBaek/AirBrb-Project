@@ -1,8 +1,7 @@
 import React from 'react';
-import LogoutButton from '../components/logoutButton';
-import { Link } from 'react-router-dom';
 import ListingsDisplay from '../components/ListingsDisplay'
 import PropTypes from 'prop-types';
+import BasicMenu from '../components/ProfileMenu'
 
 ListingsScreen.propTypes = {
   isLoggedIn: PropTypes.bool,
@@ -12,12 +11,10 @@ ListingsScreen.propTypes = {
 export default function ListingsScreen ({ isLoggedIn, setLoggedIn }) {
   return (
     <div>
-      ListingsScreen <br />
+      ListingsScreen
       {isLoggedIn
         ? <>
-            <Link to="/">Listings</Link>
-            <Link to="/hostedListings">MyListings</Link>
-            <LogoutButton isLoggedIn={isLoggedIn} setLoggedIn={setLoggedIn}></LogoutButton>
+            <BasicMenu isLoggedIn={isLoggedIn} setLoggedIn={setLoggedIn}></BasicMenu>
             <ListingsDisplay/>
           </>
         : 'Not LoggedIn'
