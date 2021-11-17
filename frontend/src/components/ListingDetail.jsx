@@ -9,7 +9,7 @@ ListingDetails.propTypes = {
   property: PropTypes.string,
   bedrooms: PropTypes.object,
   bathrooms: PropTypes.string,
-  reviews: PropTypes.object,
+  reviews: PropTypes.array,
   price: PropTypes.string,
 }
 

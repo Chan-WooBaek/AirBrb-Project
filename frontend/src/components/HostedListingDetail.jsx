@@ -7,9 +7,9 @@ import PropTypes from 'prop-types';
 HostedListingDetails.propTypes = {
   title: PropTypes.string,
   property: PropTypes.string,
-  bedrooms: PropTypes.object,
+  bedrooms: PropTypes.string,
   bathrooms: PropTypes.string,
-  reviews: PropTypes.object,
+  reviews: PropTypes.array,
   price: PropTypes.string,
 }
 

@@ -37,11 +37,16 @@ export default function ColumnGroupingTable () {
                   <ListingDetails title={res.title} reviews={res.reviews} price={res.price} ></ListingDetails>
                 </>,
                 code: hostedIdList[idIndex],
+                title: res.title,
               })
             }
             idIndex++;
           }
-          setRows(newRow)
+          const sortedRows = newRow;
+          sortedRows.sort(function (a, b) {
+            return a.title.localeCompare(b.title);
+          })
+          setRows(sortedRows)
         })
       })
   }, [])
