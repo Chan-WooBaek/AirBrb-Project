@@ -7,6 +7,7 @@ import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
 import ProfileMenu from './ProfileMenu';
 import PropTypes from 'prop-types';
+import ExtraSearch from './ExtraSearch';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -55,9 +56,28 @@ LoggedInAppBar.propTypes = {
   setLoggedIn: PropTypes.func,
   searchString: PropTypes.string,
   setSearchString: PropTypes.func,
+  isListingDisplay: PropTypes.bool,
+  minBedrooms: PropTypes.string,
+  setMinBedrooms: PropTypes.func,
+  maxBedrooms: PropTypes.string,
+  setMaxBedrooms: PropTypes.func,
+  minPrice: PropTypes.string,
+  setMinPrice: PropTypes.func,
+  maxPrice: PropTypes.string,
+  setMaxPrice: PropTypes.func,
+  dateRange: PropTypes.array,
+  setDateRange: PropTypes.func,
 }
 
-export default function LoggedInAppBar ({ isLoggedIn, setLoggedIn, searchString, setSearchString }) {
+export default function LoggedInAppBar ({
+  isLoggedIn, setLoggedIn,
+  searchString, setSearchString, isListingDisplay,
+  minBedrooms, setMinBedrooms,
+  maxBedrooms, setMaxBedrooms,
+  minPrice, setMinPrice,
+  maxPrice, setMaxPrice,
+  dateRange, setDateRange
+}) {
   function handleChange (event) {
     setSearchString(event.target.value)
   }
@@ -66,15 +86,30 @@ export default function LoggedInAppBar ({ isLoggedIn, setLoggedIn, searchString,
       <AppBar position="static">
         <Toolbar>
           <ProfileMenu isLoggedIn={isLoggedIn} setLoggedIn={setLoggedIn}></ProfileMenu>
-          <Search onChange={() => handleChange(event)}>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Search…"
-              inputProps={{ 'aria-label': 'search' }}
-            />
-          </Search>
+          {isListingDisplay === true
+            ? <>
+                <Search>
+                  <SearchIconWrapper>
+                    <SearchIcon />
+                  </SearchIconWrapper>
+                  <StyledInputBase
+                    placeholder="Search…"
+                    inputProps={{ 'aria-label': 'search' }}
+                    onChange={() => handleChange(event)}
+                  />
+                  <ExtraSearch setMinBedrooms={setMinBedrooms}
+                    setMaxBedrooms={setMaxBedrooms}
+                    setMinPrice={setMinPrice}
+                    setMaxPrice={setMaxPrice}
+                    dateRange={dateRange}
+                    setDateRange={setDateRange}
+                  >
+                  </ExtraSearch>
+                </Search>
+              </>
+            : <>
+              </>
+          }
         </Toolbar>
       </AppBar>
     </Box>

@@ -79,8 +79,8 @@ export default function ColumnGroupingTable () {
   }
 
   return (
-    <Paper sx={{ width: '100%', position: 'absolute', bottom: '0px', height: '80%' }}>
-      <TableContainer sx={{ height: '90%' }}>
+    <Paper sx={{ width: '100%', position: 'absolute', bottom: '0px', height: '85vh' }}>
+      <TableContainer sx={{ height: '91%' }}>
         <Table stickyHeader aria-label="sticky table">
           <TableBody>
             {rows

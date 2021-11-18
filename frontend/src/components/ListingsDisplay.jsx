@@ -18,9 +18,14 @@ const columns = [
 ListingsDisplay.propTypes = {
   searchString: PropTypes.string,
   setSearchString: PropTypes.func,
+  minBedrooms: PropTypes.string,
+  maxBedrooms: PropTypes.string,
+  minPrice: PropTypes.string,
+  maxPrice: PropTypes.string,
+  dateRange: PropTypes.array,
 }
 
-export default function ListingsDisplay ({ searchString, setSearchString }) {
+export default function ListingsDisplay ({ searchString, setSearchString, minBedrooms, maxBedrooms, minPrice, maxPrice, dateRange }) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [rows, setRows] = React.useState([]);
@@ -30,15 +35,43 @@ export default function ListingsDisplay ({ searchString, setSearchString }) {
       .then((data) => {
         const IdList = [];
         for (const row of data.listings) {
-          if (row.title.startsWith(searchString) || searchString === '' || row.address.city.startsWith(searchString)) IdList.push(row.id)
+          const title = row.title.toLowerCase();
+          const city = row.address.city.toLowerCase();
+          let textString = null;
+          if (searchString !== undefined) textString = searchString.toLowerCase();
+          if (title.startsWith(textString) || searchString === '' || city.startsWith(textString)) IdList.push(row.id)
         }
         Promise.all(IdList.map(id => myFetch('GET', 'listings/' + id, null))).then(responses =>
           Promise.all(responses.map(res => res.listing))
         ).then(data => {
           const newRow = [];
           let idIndex = 0;
+          let minBed = null;
+          let maxBed = null;
+          let minPri = null;
+          let maxPri = null;
+          let dateCheck = false;
           for (const res of data) {
-            if (res.published) {
+            if (minBedrooms === null) minBed = 0;
+            else minBed = Number(minBedrooms);
+            if (maxBedrooms === null) maxBed = Object.keys(res.metadata.bedrooms).length;
+            else maxBed = Number(maxBedrooms);
+            if (minPrice === null) minPri = 0;
+            else minPri = Number(minPrice);
+            if (maxPrice === null) maxPri = res.price;
+            else maxPri = Number(maxPrice);
+            for (const date in res.availability) {
+              dateCheck = false;
+              const firstDate = new Date(res.availability[date].start);
+              const lastDate = new Date(res.availability[date].end);
+              if (dateRange[0] >= firstDate && dateRange[1] <= lastDate && dateRange[0] !== null && dateRange[1] !== null) dateCheck = true;
+              if (dateRange[0] === null || dateRange[1] === null) dateCheck = true;
+            }
+            if (res.published && Object.keys(res.metadata.bedrooms).length >= minBed &&
+              Object.keys(res.metadata.bedrooms).length <= maxBed &&
+              Number(res.price) >= minPri &&
+              Number(res.price) <= maxPri &&
+              dateCheck === true) {
               newRow.push({
                 content: <>
                   <img src={res.thumbnail} style={{ width: '50%', height: '50vh' }} />
@@ -83,8 +116,8 @@ export default function ListingsDisplay ({ searchString, setSearchString }) {
   }
 
   return (
-    <Paper sx={{ width: '100%', position: 'absolute', bottom: '0px', height: '80%' }}>
-      <TableContainer sx={{ height: '90%' }}>
+    <Paper sx={{ width: '100%', position: 'absolute', bottom: '0px', height: '92vh' }}>
+      <TableContainer sx={{ height: '92%' }}>
         <Table stickyHeader aria-label="sticky table">
           <TableBody>
             {rows
