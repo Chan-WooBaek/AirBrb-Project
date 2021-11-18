@@ -18,35 +18,26 @@ export default function DatePicker ({ isLoggedIn, listingId, price }) {
   const [inValue, setInValue] = React.useState(new Date('2021-01-01T21:11:54'));
   const [outValue, setOutValue] = React.useState(new Date('2021-01-02T21:11:54'));
   // const [bookingSuccess, setBookingSuccess] = React.useState(2);
-  // const availabilities = []; 
-  // React.useEffect(() => {
-  //   const response = await myFetch('GET', `listings/${listingId}`, null);
-  //   availabilities = response.listing.availability
-  // }, []);
- 
+  const [availabilities, setAvailabilities] = React.useState([]);
+  // const [dateIsAvailable, setDateIsAvailable] = React.useState(false);
+  async function updateAvailabilities (availabilities) {
+    const response = await myFetch('GET', `listings/${listingId}`, null);
+    setAvailabilities(response.listing.availability)
+  }
+  React.useEffect(() => {
+    updateAvailabilities(availabilities)
+  }, []);
+
   const checkInHandleChange = (newValue) => {
-    if (checkValidInDate(newValue)) {
-      setInValue(newValue);
-    }
+    setInValue(newValue);
   };
 
   const checkOutHandleChange = (newValue) => {
-    if (checkValidOutDate(newValue)) {
-      setOutValue(newValue);
-    }
+    setOutValue(newValue);
   };
 
-  const checkValidInDate = (newValue) => {
-    if (newValue >= outValue) {
-      alert('Please enter valid dates');
-      return false;
-    }
-    return true;
-  }
-
-  const checkValidOutDate = (newValue) => {
-    if (newValue <= inValue) {
-      alert('Please enter valid dates');
+  const checkValidDates = (inValue, outValue) => {
+    if (inValue >= outValue) {
       return false;
     }
     return true;
@@ -57,6 +48,10 @@ export default function DatePicker ({ isLoggedIn, listingId, price }) {
   }
 
   const makeBooking = () => {
+    if (!checkValidDates(inValue, outValue)) {
+      alert('Please enter valid dates');
+      return
+    }
     const body = {
       dateRange: {
         start: inValue,
@@ -64,14 +59,41 @@ export default function DatePicker ({ isLoggedIn, listingId, price }) {
       },
       totalPrice: price * getBookingDays()
     }
-    const token = localStorage.getItem('token');
-    myFetch('POST', `bookings/new/${listingId}`, token, body)
-      .then(data => {
-        console.log(data)
-      })
-      .catch(err => {
-        alert(err)
-      })
+    let dateisAvailable = false;
+    for (const dates in availabilities) {
+      if (Object.keys(availabilities[dates]).length !== 0) {
+        const start = availabilities[dates].start
+        const end = availabilities[dates].end
+        const bookingStart = new Date(inValue);
+        const bookingEnd = new Date(outValue);
+        if (checkIfDateIsWithinRange(start, end, bookingStart.toISOString()) && checkIfDateIsWithinRange(start, end, bookingEnd.toISOString())) {
+          console.log('aaaaa')
+          dateisAvailable = true;
+          break
+        }
+      }
+    }
+    console.log(dateisAvailable)
+    if (dateisAvailable) {
+      const token = localStorage.getItem('token');
+      myFetch('POST', `bookings/new/${listingId}`, token, body)
+        .then(data => {
+          console.log(data)
+        })
+        .catch(err => {
+          alert(err)
+        })
+    } else {
+      alert('Date is not available for booking')
+    }
+  }
+
+  const checkIfDateIsWithinRange = (startDate, endDate, date) => {
+    if (startDate.localeCompare(date) <= 0 && endDate.localeCompare(date) >= 0) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   return (
