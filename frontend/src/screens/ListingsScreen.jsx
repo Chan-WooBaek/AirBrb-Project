@@ -45,7 +45,7 @@ export default function ListingsScreen ({ isLoggedIn, setLoggedIn }) {
             </GuestAppBar>
           </>
       }
-      <ListingsDisplay searchString={searchString} setSearchString={setSearchString} minBedrooms={minBedrooms} maxBedrooms={maxBedrooms} minPrice={minPrice} maxPrice={maxPrice} dateRange={dateRange}/>
+      <ListingsDisplay isLoggedIn={isLoggedIn} searchString={searchString} setSearchString={setSearchString} minBedrooms={minBedrooms} maxBedrooms={maxBedrooms} minPrice={minPrice} maxPrice={maxPrice} dateRange={dateRange}/>
     </div>
   );
 }

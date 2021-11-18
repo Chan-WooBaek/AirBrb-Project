@@ -23,14 +23,18 @@ ListingsDisplay.propTypes = {
   minPrice: PropTypes.string,
   maxPrice: PropTypes.string,
   dateRange: PropTypes.array,
+  isLoggedIn: PropTypes.bool,
 }
 
-export default function ListingsDisplay ({ searchString, setSearchString, minBedrooms, maxBedrooms, minPrice, maxPrice, dateRange }) {
+export default function ListingsDisplay ({ searchString, setSearchString, minBedrooms, maxBedrooms, minPrice, maxPrice, dateRange, isLoggedIn }) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [rows, setRows] = React.useState([]);
+  const [bookings, setBookings] = React.useState({});
 
   React.useEffect(() => {
+    const token = localStorage.getItem('token');
+    const user = localStorage.getItem('user');
     myFetch('GET', 'listings', null)
       .then((data) => {
         const IdList = [];
@@ -83,10 +87,29 @@ export default function ListingsDisplay ({ searchString, setSearchString, minBed
             }
             idIndex++;
           }
+
           const sortedRows = newRow;
           sortedRows.sort(function (a, b) {
             return a.title.localeCompare(b.title);
           })
+          if (isLoggedIn) {
+            myFetch('GET', 'bookings', token)
+              .then(data => {
+                setBookings(data.bookings)
+              })
+            for (const booking in bookings) {
+              if (bookings[booking].owner === user) {
+                const matchingListingId = Number(bookings[booking].listingId)
+                for (const row in sortedRows) {
+                  if (sortedRows[row].code === matchingListingId) {
+                    const copy = sortedRows[row];
+                    sortedRows.splice(row, 1);
+                    sortedRows.unshift(copy);
+                  }
+                }
+              }
+            }
+          }
           setRows(sortedRows)
         })
       })

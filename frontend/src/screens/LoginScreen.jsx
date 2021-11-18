@@ -17,7 +17,6 @@ export default function LoginScreen ({ isLoggedIn, setLoggedIn }) {
   const moveTo = useNavigate();
 
   const LoginForm = (e) => {
-    console.log(e);
     const body = {
       email: e.email,
       password: e.password,
