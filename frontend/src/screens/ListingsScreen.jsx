@@ -6,16 +6,18 @@ import GuestAppBar from '../components/GuestAppBar';
 
 ListingsScreen.propTypes = {
   isLoggedIn: PropTypes.bool,
-  setLoggedIn: PropTypes.func
+  setLoggedIn: PropTypes.func,
+  searchString: PropTypes.string,
+  setSearchString: PropTypes.func,
 }
 
-export default function ListingsScreen ({ isLoggedIn, setLoggedIn }) {
+export default function ListingsScreen ({ isLoggedIn, setLoggedIn, searchString, setSearchString }) {
   return (
     <div>
       {isLoggedIn
         ? <>
-            <LoggedInAppBar isLoggedIn={isLoggedIn} setLoggedIn={setLoggedIn}></LoggedInAppBar>
-            <ListingsDisplay/>
+            <LoggedInAppBar isLoggedIn={isLoggedIn} setLoggedIn={setLoggedIn} searchString={searchString} setSearchString={setSearchString}></LoggedInAppBar>
+            <ListingsDisplay searchString={searchString} setSearchString={setSearchString}/>
           </>
         : <>
             <GuestAppBar></GuestAppBar>

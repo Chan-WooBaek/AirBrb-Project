@@ -20,21 +20,25 @@ export default function AvailabilityCalendar ({ id }) {
   function handleClick () {
     if (value[0] === null || value[1] === null) {
       alert('Please pick 2 dates');
+      return;
     }
     myFetch('GET', 'listings/' + id, null)
       .then(data => {
         const availabilities = data.listing.availability
         availabilities.push({ start: value[0], end: value[1] })
-        const responseBody = {
-          availability: availabilities,
-        }
+        const responseBody = [
+          { availability: availabilities },
+          { published: data.listing.published },
+        ]
         return responseBody
       })
       .then(responseBody => {
-        myFetch('PUT', 'listings/unpublish/' + id, token, null)
-        myFetch('PUT', 'listings/publish/' + id, token, responseBody)
+        console.log(responseBody[0].availability)
+        if (responseBody[1].published) myFetch('PUT', 'listings/unpublish/' + id, token, null)
+        myFetch('PUT', 'listings/publish/' + id, token, responseBody[0])
           .then(data => {
             console.log('success')
+            window.location.reload()
           })
       })
   }

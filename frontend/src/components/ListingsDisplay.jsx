@@ -9,12 +9,18 @@ import TableRow from '@mui/material/TableRow';
 import { useNavigate } from 'react-router-dom';
 import myFetch from './fetcher';
 import ListingDetails from './ListingDetail';
+import PropTypes from 'prop-types';
 
 const columns = [
   { id: 'content', label: 'Content', minWidth: 500 },
 ];
 
-export default function ColumnGroupingTable () {
+ListingsDisplay.propTypes = {
+  searchString: PropTypes.string,
+  setSearchString: PropTypes.func,
+}
+
+export default function ListingsDisplay ({ searchString, setSearchString }) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [rows, setRows] = React.useState([]);
@@ -22,9 +28,11 @@ export default function ColumnGroupingTable () {
   React.useEffect(() => {
     myFetch('GET', 'listings', null)
       .then((data) => {
-        const hostedIdList = [];
-        for (const row of data.listings) hostedIdList.push(row.id)
-        Promise.all(hostedIdList.map(id => myFetch('GET', 'listings/' + id, null))).then(responses =>
+        const IdList = [];
+        for (const row of data.listings) {
+          if (row.title.startsWith(searchString) || searchString === '' || row.address.city.startsWith(searchString)) IdList.push(row.id)
+        }
+        Promise.all(IdList.map(id => myFetch('GET', 'listings/' + id, null))).then(responses =>
           Promise.all(responses.map(res => res.listing))
         ).then(data => {
           const newRow = [];
@@ -36,7 +44,7 @@ export default function ColumnGroupingTable () {
                   <img src={res.thumbnail} style={{ width: '50%', height: '50vh' }} />
                   <ListingDetails title={res.title} reviews={res.reviews} price={res.price} ></ListingDetails>
                 </>,
-                code: hostedIdList[idIndex],
+                code: IdList[idIndex],
                 title: res.title,
               })
             }
@@ -49,7 +57,7 @@ export default function ColumnGroupingTable () {
           setRows(sortedRows)
         })
       })
-  }, [])
+  })
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
