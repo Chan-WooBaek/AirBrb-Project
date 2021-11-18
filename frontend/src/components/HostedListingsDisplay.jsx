@@ -12,6 +12,7 @@ import DeleteHostedButton from './DeleteHostedButton';
 import LiveHostedButton from './LiveHostedButton';
 import HostedListingDetails from './HostedListingDetail';
 import AvailabilityCalendar from '../components/AvailabilityCalendar';
+import ManageBookingsButton from '../components/ManageBookingsButton';
 
 const columns = [
   { id: 'content', label: 'Content', minWidth: 500 },
@@ -44,6 +45,7 @@ export default function ColumnGroupingTable () {
                 <AvailabilityCalendar id={hostedIdList[idIndex]}></AvailabilityCalendar>
                 <DeleteHostedButton id={hostedIdList[idIndex]}/>
                 <LiveHostedButton id={hostedIdList[idIndex]}></LiveHostedButton>
+                <ManageBookingsButton id={hostedIdList[idIndex]}></ManageBookingsButton>
               </>,
             })
             idIndex++;

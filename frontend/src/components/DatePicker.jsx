@@ -44,7 +44,11 @@ export default function DatePicker ({ isLoggedIn, listingId, price }) {
   }
 
   const getBookingDays = () => {
-    Math.floor((Date.parse(outValue) - Date.parse(inValue)) / 86400000)
+    console.log(outValue);
+    console.log(inValue);
+    const isoOut = new Date(outValue);
+    const isoIn = new Date(inValue);
+    return Math.floor((Math.abs(isoOut - isoIn)) / (1000 * 60 * 60 * 24));
   }
 
   const makeBooking = () => {
@@ -67,18 +71,17 @@ export default function DatePicker ({ isLoggedIn, listingId, price }) {
         const bookingStart = new Date(inValue);
         const bookingEnd = new Date(outValue);
         if (checkIfDateIsWithinRange(start, end, bookingStart.toISOString()) && checkIfDateIsWithinRange(start, end, bookingEnd.toISOString())) {
-          console.log('aaaaa')
           dateisAvailable = true;
           break
         }
       }
     }
-    console.log(dateisAvailable)
     if (dateisAvailable) {
       const token = localStorage.getItem('token');
       myFetch('POST', `bookings/new/${listingId}`, token, body)
         .then(data => {
           console.log(data)
+          alert('Booking has been made');
         })
         .catch(err => {
           alert(err)

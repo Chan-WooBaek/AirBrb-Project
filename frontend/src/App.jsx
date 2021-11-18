@@ -8,7 +8,7 @@ import RegisterScreen from './screens/RegisterScreen';
 import HostedListingsScreen from './screens/HostedListingsScreen';
 import EditButton from './components/EditButton';
 import ViewListingScreen from './screens/ViewListingScreen';
-// import BookingRequestScreen from './screens/BookingRequestScreen';
+import BookingRequestScreen from './screens/BookingRequestScreen';
 
 function App () {
   const [isLoggedIn, setLoggedIn] = React.useState(localStorage.getItem('isLoggedIn') === 'true');
@@ -25,7 +25,7 @@ function App () {
           {/* <Route path = "/list/415204074" element={<ViewListingSreen id={415204074}/>}></Route> */}
           <Route path = "/listings/:id" element={<ViewListingScreen isLoggedIn={isLoggedIn} setLoggedIn={setLoggedIn}/>}></Route>
           <Route path ="/" element={<Navigate replace to="/listings"/>}></Route>
-          {/* <Route path = "/bookings" element={<BookingRequestScreen/>}></Route> */}
+          <Route path = "/bookings/:id" element={<BookingRequestScreen isLoggedIn={isLoggedIn} setLoggedIn={setLoggedIn}/>}></Route>
         </Routes>
       </Router>
     </>

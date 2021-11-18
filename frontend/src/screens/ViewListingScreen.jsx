@@ -6,6 +6,8 @@ import DatePicker from '../components/DatePicker';
 import PropTypes from 'prop-types';
 import GuestAppBar from '../components/GuestAppBar';
 import LoggedInAppBar from '../components/LoggedInAppBar';
+import TextField from '@mui/material/TextField';
+import Rating from '../components/Rating';
 
 ViewListingScreen.propTypes = {
   isLoggedIn: PropTypes.bool,
@@ -15,6 +17,7 @@ ViewListingScreen.propTypes = {
 function ViewListingScreen ({ isLoggedIn, setLoggedIn }) {
   const params = useParams();
   const id = params.id;
+  const [review, setReview] = React.useState(false);
   const [details, setDetails] = React.useState({
     title: '',
     owner: '',
@@ -43,12 +46,26 @@ function ViewListingScreen ({ isLoggedIn, setLoggedIn }) {
     postedOn: ''
   });
 
+  async function checkIfAbleToLeaveReview () {
+    const token = localStorage.getItem('token');
+    const email = localStorage.getItem('user');
+    console.log(email);
+    const response = await myFetch('GET', 'bookings', token);
+    const dict = response.bookings;
+    for (const booking in dict) {
+      if (dict[booking].owner === email && dict[booking].listingId === id) {
+        setReview(true);
+      }
+    }
+  }
+
   async function getListingDetails (listingId, setDetails) {
     const response = await myFetch('GET', `listings/${listingId}`, null);
     setDetails(response.listing);
   }
   React.useEffect(() => {
     getListingDetails(id, setDetails);
+    checkIfAbleToLeaveReview();
   }, []);
 
   return (
@@ -82,6 +99,21 @@ function ViewListingScreen ({ isLoggedIn, setLoggedIn }) {
         <p>{'Number of bedrooms: ' + Object.keys(details.metadata.bedrooms).length}</p>
       </Box>
       <DatePicker isLoggedIn={isLoggedIn} listingId={id} price={details.price}></DatePicker>
+      {review
+        ? <div>
+            <p>Leave a review below:</p>
+            <TextField
+              id="outlined-multiline-static"
+              label="Review"
+              multiline
+              rows={4}
+              defaultValue=""
+              sx={{ width: '50%' }}
+            />
+            <Rating></Rating>
+          </div>
+        : <></>
+      }
       <Box sx={{ display: 'flex', p: 1, m: 1, bgcolor: 'background.paper' }}>
         {details.reviews.length
           ? <p>{'Reviews : ' + details.reviews[0]}</p>
