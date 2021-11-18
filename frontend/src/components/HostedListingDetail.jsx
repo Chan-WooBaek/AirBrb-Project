@@ -14,6 +14,15 @@ HostedListingDetails.propTypes = {
 }
 
 export default function HostedListingDetails ({ title, property, bedrooms, bathrooms, reviews, price }) {
+  function getRating () {
+    let totalRating = 0;
+    for (const review in reviews) {
+      totalRating += reviews[review].rating;
+    }
+    const avgRating = (totalRating / reviews.length);
+    if (isNaN(avgRating)) return 'No Reviews';
+    else return avgRating.toFixed(1);
+  }
   return (
     <Card sx={{ width: '50%', height: '50vh', display: 'inline-block' }}>
       <CardContent>
@@ -29,10 +38,10 @@ export default function HostedListingDetails ({ title, property, bedrooms, bathr
           {'Bathrooms: ' + bathrooms}
         </Typography>
         <Typography sx={{ fontSize: 30, textAlign: 'center' }}>
-          {'Rating: ' + reviews}
+          {'Rating: ' + getRating()}
         </Typography>
         <Typography sx={{ fontSize: 30, textAlign: 'center' }}>
-          {'Number of Reviews: ' + reviews}
+          {'Number of Reviews: ' + reviews.length}
         </Typography>
         <Typography sx={{ fontSize: 30, textAlign: 'center' }}>
           {'Price: ' + price}

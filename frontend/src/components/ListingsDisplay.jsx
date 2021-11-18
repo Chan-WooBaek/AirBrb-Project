@@ -52,13 +52,13 @@ export default function ListingsDisplay ({ searchString, setSearchString, minBed
           let maxPri = null;
           let dateCheck = false;
           for (const res of data) {
-            if (minBedrooms === null) minBed = 0;
+            if (minBedrooms === null || minBedrooms === '') minBed = 0;
             else minBed = Number(minBedrooms);
-            if (maxBedrooms === null) maxBed = Object.keys(res.metadata.bedrooms).length;
+            if (maxBedrooms === null || maxBedrooms === '') maxBed = Object.keys(res.metadata.bedrooms).length;
             else maxBed = Number(maxBedrooms);
-            if (minPrice === null) minPri = 0;
+            if (minPrice === null || minPrice === '') minPri = 0;
             else minPri = Number(minPrice);
-            if (maxPrice === null) maxPri = res.price;
+            if (maxPrice === null || maxPrice === '') maxPri = res.price;
             else maxPri = Number(maxPrice);
             for (const date in res.availability) {
               dateCheck = false;

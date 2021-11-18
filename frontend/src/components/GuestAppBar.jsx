@@ -7,13 +7,22 @@ import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
 import PropTypes from 'prop-types';
 import GuestMenu from '../components/GuestMenu';
+import ExtraSearch from './ExtraSearch';
 
 GuestAppBar.propTypes = {
-  isLoggedIn: PropTypes.bool,
-  setLoggedIn: PropTypes.func,
   isListingDisplay: PropTypes.bool,
   searchString: PropTypes.string,
   setSearchString: PropTypes.func,
+  minBedrooms: PropTypes.string,
+  setMinBedrooms: PropTypes.func,
+  maxBedrooms: PropTypes.string,
+  setMaxBedrooms: PropTypes.func,
+  minPrice: PropTypes.string,
+  setMinPrice: PropTypes.func,
+  maxPrice: PropTypes.string,
+  setMaxPrice: PropTypes.func,
+  dateRange: PropTypes.array,
+  setDateRange: PropTypes.func,
 }
 
 const Search = styled('div')(({ theme }) => ({
@@ -58,7 +67,15 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function GuestAppBar ({ isLoggedIn, setLoggedIn, isListingDisplay, searchString, setSearchString }) {
+export default function GuestAppBar ({
+  isListingDisplay,
+  searchString, setSearchString,
+  minBedrooms, setMinBedrooms,
+  maxBedrooms, setMaxBedrooms,
+  minPrice, setMinPrice,
+  maxPrice, setMaxPrice,
+  dateRange, setDateRange
+}) {
   function handleChange (event) {
     setSearchString(event.target.value)
   }
@@ -69,14 +86,23 @@ export default function GuestAppBar ({ isLoggedIn, setLoggedIn, isListingDisplay
           <GuestMenu></GuestMenu>
           {isListingDisplay === true
             ? <>
-                <Search onChange={() => handleChange(event)}>
+                <Search>
                   <SearchIconWrapper>
                     <SearchIcon />
                   </SearchIconWrapper>
                   <StyledInputBase
                     placeholder="Search…"
                     inputProps={{ 'aria-label': 'search' }}
+                    onChange={() => handleChange(event)}
                   />
+                  <ExtraSearch setMinBedrooms={setMinBedrooms}
+                    setMaxBedrooms={setMaxBedrooms}
+                    setMinPrice={setMinPrice}
+                    setMaxPrice={setMaxPrice}
+                    dateRange={dateRange}
+                    setDateRange={setDateRange}
+                  >
+                  </ExtraSearch>
                 </Search>
               </>
             : <>
