@@ -67,6 +67,10 @@ LoggedInAppBar.propTypes = {
   setMaxPrice: PropTypes.func,
   dateRange: PropTypes.array,
   setDateRange: PropTypes.func,
+  lowRating: PropTypes.bool,
+  setLowRating: PropTypes.func,
+  highRating: PropTypes.bool,
+  setHighRating: PropTypes.func,
 }
 
 export default function LoggedInAppBar ({
@@ -76,7 +80,9 @@ export default function LoggedInAppBar ({
   maxBedrooms, setMaxBedrooms,
   minPrice, setMinPrice,
   maxPrice, setMaxPrice,
-  dateRange, setDateRange
+  dateRange, setDateRange,
+  lowRating, setLowRating,
+  highRating, setHighRating,
 }) {
   function handleChange (event) {
     setSearchString(event.target.value)
@@ -103,6 +109,8 @@ export default function LoggedInAppBar ({
                     setMaxPrice={setMaxPrice}
                     dateRange={dateRange}
                     setDateRange={setDateRange}
+                    lowRating={lowRating} setLowRating={setLowRating}
+                    highRating={highRating} setHighRating={setHighRating}
                   >
                   </ExtraSearch>
                 </Search>

@@ -26,12 +26,24 @@ ListingsDisplay.propTypes = {
   isLoggedIn: PropTypes.bool,
   bookings: PropTypes.array,
   setBookings: PropTypes.func,
+  lowRating: PropTypes.bool,
+  highRating: PropTypes.bool,
 }
 
-export default function ListingsDisplay ({ searchString, setSearchString, minBedrooms, maxBedrooms, minPrice, maxPrice, dateRange, isLoggedIn, bookings, setBookings }) {
+export default function ListingsDisplay ({ searchString, setSearchString, minBedrooms, maxBedrooms, minPrice, maxPrice, dateRange, isLoggedIn, bookings, setBookings, lowRating, highRating }) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [rows, setRows] = React.useState([]);
+
+  function getRating (reviews) {
+    let totalRating = 0;
+    for (const review in reviews) {
+      totalRating += reviews[review].rating;
+    }
+    const avgRating = (totalRating / reviews.length);
+    if (isNaN(avgRating)) return 'No Reviews';
+    else return avgRating.toFixed(1);
+  }
 
   React.useEffect(() => {
     const token = localStorage.getItem('token');
@@ -84,6 +96,7 @@ export default function ListingsDisplay ({ searchString, setSearchString, minBed
                 </>,
                 code: IdList[idIndex],
                 title: res.title,
+                rating: getRating(res.reviews),
               })
             }
             idIndex++;
@@ -110,6 +123,19 @@ export default function ListingsDisplay ({ searchString, setSearchString, minBed
                 }
               }
             }
+          }
+          if (lowRating === true) {
+            sortedRows.sort(function (a, b) {
+              if (a.rating < b.rating) return -1;
+              if (a.rating > b.rating) return 1;
+              return 0;
+            })
+          } else if (highRating === true) {
+            sortedRows.sort(function (a, b) {
+              if (a.rating > b.rating) return -1;
+              if (a.rating < b.rating) return 1;
+              return 0;
+            })
           }
           setRows(sortedRows)
         })

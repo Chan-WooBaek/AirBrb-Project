@@ -17,9 +17,13 @@ ExtraSearch.propTypes = {
   setMaxPrice: PropTypes.func,
   dateRange: PropTypes.array,
   setDateRange: PropTypes.func,
+  lowRating: PropTypes.bool,
+  setLowRating: PropTypes.func,
+  highRating: PropTypes.bool,
+  setHighRating: PropTypes.func,
 }
 
-export default function ExtraSearch ({ setMinBedrooms, setMaxBedrooms, setMinPrice, setMaxPrice, dateRange, setDateRange }) {
+export default function ExtraSearch ({ setMinBedrooms, setMaxBedrooms, setMinPrice, setMaxPrice, dateRange, setDateRange, lowRating, setLowRating, highRating, setHighRating }) {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -44,6 +48,17 @@ export default function ExtraSearch ({ setMinBedrooms, setMaxBedrooms, setMinPri
 
   const handleMaxPrice = (prop) => (event) => {
     setMaxPrice(event.target.value)
+  }
+
+  const handleLowRating = () => {
+    console.log('low');
+    const res = !lowRating
+    setLowRating(res)
+  }
+
+  const handleHighRating = () => {
+    console.log('high');
+    setHighRating(!highRating)
   }
 
   return (
@@ -95,8 +110,8 @@ export default function ExtraSearch ({ setMinBedrooms, setMaxBedrooms, setMinPri
             onChange={handleMaxPrice('maxPrice')}
           />
           <SearchDateRange dateRange={dateRange} setDateRange={setDateRange}></SearchDateRange>
-          <Button>Lowest to Highest Reviews</Button>
-          <Button>Highest to Lowest Reviews</Button>
+          <Button onClick={() => { handleLowRating() }}>Lowest to Highest Reviews</Button>
+          <Button onClick={() => { handleHighRating() }}>Highest to Lowest Reviews</Button>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Close</Button>
