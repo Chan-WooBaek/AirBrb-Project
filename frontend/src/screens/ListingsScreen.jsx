@@ -18,6 +18,7 @@ export default function ListingsScreen ({ isLoggedIn, setLoggedIn }) {
   const [minPrice, setMinPrice] = React.useState(null);
   const [maxPrice, setMaxPrice] = React.useState(null);
   const [dateRange, setDateRange] = React.useState([null, null]);
+  const [bookings, setBookings] = React.useState(null);
   return (
     <div>
       {isLoggedIn
@@ -45,7 +46,12 @@ export default function ListingsScreen ({ isLoggedIn, setLoggedIn }) {
             </GuestAppBar>
           </>
       }
-      <ListingsDisplay isLoggedIn={isLoggedIn} searchString={searchString} setSearchString={setSearchString} minBedrooms={minBedrooms} maxBedrooms={maxBedrooms} minPrice={minPrice} maxPrice={maxPrice} dateRange={dateRange}/>
+      <ListingsDisplay isLoggedIn={isLoggedIn} searchString={searchString} setSearchString={setSearchString}
+        minBedrooms={minBedrooms} maxBedrooms={maxBedrooms}
+        minPrice={minPrice} maxPrice={maxPrice}
+        dateRange={dateRange}
+        bookings={bookings} setBookings={setBookings}
+      />
     </div>
   );
 }

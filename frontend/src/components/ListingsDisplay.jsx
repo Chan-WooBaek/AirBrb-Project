@@ -24,13 +24,14 @@ ListingsDisplay.propTypes = {
   maxPrice: PropTypes.string,
   dateRange: PropTypes.array,
   isLoggedIn: PropTypes.bool,
+  bookings: PropTypes.array,
+  setBookings: PropTypes.func,
 }
 
-export default function ListingsDisplay ({ searchString, setSearchString, minBedrooms, maxBedrooms, minPrice, maxPrice, dateRange, isLoggedIn }) {
+export default function ListingsDisplay ({ searchString, setSearchString, minBedrooms, maxBedrooms, minPrice, maxPrice, dateRange, isLoggedIn, bookings, setBookings }) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [rows, setRows] = React.useState([]);
-  const [bookings, setBookings] = React.useState({});
 
   React.useEffect(() => {
     const token = localStorage.getItem('token');
@@ -113,7 +114,7 @@ export default function ListingsDisplay ({ searchString, setSearchString, minBed
           setRows(sortedRows)
         })
       })
-  })
+  }, [rows])
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
