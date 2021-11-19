@@ -44,7 +44,6 @@ const CreateListingForm = () => {
       .catch(err => console.log(err))
     handleEditClick('../hostedListings/', { replace: true })
     setOpen(false);
-    window.location.reload();
   }
 
   const [title, setTitle] = React.useState('');
@@ -84,7 +83,7 @@ const CreateListingForm = () => {
 
   return (
     <div>
-      <Button variant="outlined" onClick={handleClickOpen}>
+      <Button name="createListingButton" variant="outlined" onClick={handleClickOpen}>
         Create New Listing
       </Button>
       <Dialog open={open} onClose={handleClose}>
@@ -215,7 +214,7 @@ const CreateListingForm = () => {
         <DialogActions>
           <Button onClick={addBedrooms}>Add Bedroom</Button>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={() => createListing({
+          <Button name="submitListingButton" onClick={() => createListing({
             title: title,
             address: {
               street: street,

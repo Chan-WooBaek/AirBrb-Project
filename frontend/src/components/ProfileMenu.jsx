@@ -66,7 +66,7 @@ export default function ProfileMenu ({ isLoggedIn, setLoggedIn }) {
         aria-label="open drawer"
         onClick={handleClick}
       >
-        <AccountCircleIcon></AccountCircleIcon>
+        <AccountCircleIcon name="userAccountCircleIcon"></AccountCircleIcon>
       </IconButton>
       <Menu
         id="basic-menu"
@@ -78,7 +78,7 @@ export default function ProfileMenu ({ isLoggedIn, setLoggedIn }) {
         }}
       >
         <MenuItem onClick={handleListings}>Listings</MenuItem>
-        <MenuItem onClick={handleHostedListings}>MyListings</MenuItem>
+        <MenuItem name="myListingsButton" onClick={handleHostedListings}>MyListings</MenuItem>
         <MenuItem onClick={() => handleLoggingOut(isLoggedIn, setLoggedIn)}>Logout</MenuItem>
       </Menu>
     </div>

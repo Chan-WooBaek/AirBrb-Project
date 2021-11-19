@@ -24,18 +24,18 @@ export default function ListingDetails ({ title, property, bedrooms, bathrooms, 
     else return avgRating.toFixed(1);
   }
   return (
-    <Card sx={{ width: '50%', height: '50vh', display: 'inline-block' }}>
+    <Card sx={{ width: '50%', height: '30vh', display: 'inline-block' }}>
       <CardContent>
-        <Typography sx={{ fontSize: 50, textAlign: 'center' }} gutterBottom>
+        <Typography sx={{ fontSize: '2.7vw', textAlign: 'center' }} gutterBottom>
           {title}
         </Typography>
-        <Typography sx={{ fontSize: 50, textAlign: 'center' }}>
+        <Typography sx={{ fontSize: '2.5vw', textAlign: 'center' }}>
           {'Rating: ' + getRating()}
         </Typography>
-        <Typography sx={{ fontSize: 50, textAlign: 'center' }}>
+        <Typography sx={{ fontSize: '2.5vw', textAlign: 'center' }}>
           {'Number of Reviews: ' + reviews.length}
         </Typography>
-        <Typography sx={{ fontSize: 50, textAlign: 'center' }}>
+        <Typography sx={{ fontSize: '2.5vw', textAlign: 'center' }}>
           {'Price: ' + price}
         </Typography>
       </CardContent>

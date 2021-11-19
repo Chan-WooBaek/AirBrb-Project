@@ -45,9 +45,9 @@ export default function LoginScreen ({ isLoggedIn, setLoggedIn }) {
         : <>
             <GuestAppBar></GuestAppBar>
             <h1>Login Form</h1>
-            Email<input type="text" onChange={(e) => setEmail(e.target.value)} /><br/>
-            Password<input type="text" onChange={(e) => setPassword(e.target.value)} /><br/>
-            <button onClick={() => LoginForm({ email: email, password: password, isLoggedIn: isLoggedIn, setLoggedIn: setLoggedIn })}>Submit</button>
+            Email<input name="loginEmail" type="text" onChange={(e) => setEmail(e.target.value)} /><br/>
+            Password<input name="loginPassword" type="text" onChange={(e) => setPassword(e.target.value)} /><br/>
+            <button name="loginSubmitButton" onClick={() => LoginForm({ email: email, password: password, isLoggedIn: isLoggedIn, setLoggedIn: setLoggedIn })}>Submit</button>
           </>
       }
     </div>

@@ -37,7 +37,7 @@ export default function HostedListingsDisplay () {
           for (const res of data) {
             newRow.push({
               content: <>
-                <img src={res.thumbnail} style={{ width: '50%', height: '50vh' }} />
+                <img src={res.thumbnail} style={{ width: '50%', height: '30vh' }} />
                 <HostedListingDetails title={res.title} property={res.metadata.propType} bedrooms={res.metadata.beds} bathrooms={res.metadata.bathrooms} reviews={res.reviews} price={res.price}/>
               </>,
               code: hostedIdList[idIndex],
@@ -53,7 +53,7 @@ export default function HostedListingsDisplay () {
           setRows(newRow)
         })
       })
-  }, [])
+  }, [rows])
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -92,7 +92,7 @@ export default function HostedListingsDisplay () {
                       const value = row[column.id];
                       return (
                         column.id === 'content'
-                          ? <TableCell sx={{ width: '80vw' }} key={column.id} align={column.align} onClick={() => editRoute(row.code)} onMouseEnter={() => handleRowHover()} style={{ cursor: cursor }}>
+                          ? <TableCell name="hostedListingCard" sx={{ width: '80vw' }} key={column.id} align={column.align} onClick={() => editRoute(row.code)} onMouseEnter={() => handleRowHover()} style={{ cursor: cursor }}>
                             {column.format && typeof value === 'number'
                               ? column.format(value)
                               : value}

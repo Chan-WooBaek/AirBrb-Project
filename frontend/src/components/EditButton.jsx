@@ -279,7 +279,7 @@ const EditButton = () => {
         <DialogActions>
         <Button onClick={addBedrooms}>Add Bedroom</Button>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={() => editListing({
+          <Button name="submitEditButton" onClick={() => editListing({
             id: id,
             title: listingDetails.title,
             address: {

@@ -11,7 +11,10 @@ import myFetch from './fetcher';
 DatePicker.propTypes = {
   isLoggedIn: PropTypes.bool,
   listingId: PropTypes.string,
-  price: PropTypes.number
+  price: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]),
 }
 
 export default function DatePicker ({ isLoggedIn, listingId, price }) {

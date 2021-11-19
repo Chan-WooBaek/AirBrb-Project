@@ -7,7 +7,7 @@ const BedroomInput = ({ idx, state, setState }) => {
     <TextField
       autoFocus
       margin="dense"
-      id="bedroom"
+      id={'bedroom' + idx }
       label={'Bedroom ' + (idx + 1) + ' bed types'}
       type="text"
       fullWidth

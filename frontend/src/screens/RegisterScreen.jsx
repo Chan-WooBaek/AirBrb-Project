@@ -54,12 +54,12 @@ export default function RegisterScreen ({ isLoggedIn, setLoggedIn }) {
         : <>
             <GuestAppBar></GuestAppBar>
             <h1>Register Form</h1>
-            Email<input type="text" onChange={(e) => setEmail(e.target.value)} /><br/>
-            Password<input type="text" onChange={(e) => setPassword(e.target.value)} /><br/>
-            ConfirmPassword<input type="text" onChange={(e) => setConfirmPassword(e.target.value)} /><br/>
+            Email<input name="email" type="text" onChange={(e) => setEmail(e.target.value)} /><br/>
+            Password<input name="password" type="text" onChange={(e) => setPassword(e.target.value)} /><br/>
+            ConfirmPassword<input name="confirmPassword" type="text" onChange={(e) => setConfirmPassword(e.target.value)} /><br/>
             <div>{password !== confirmPassword ? "passswords don't match" : 'passwords match'}</div>
-            Name<input type="text" onChange={(e) => setName(e.target.value)} /><br/>
-            <button onClick={() => RegisterForm({ email: email, password: password, confirmPassword: confirmPassword, name: name, loggedIn: isLoggedIn, setLoggedIn: setLoggedIn })}>Submit</button>
+            Name<input name="name" type="text" onChange={(e) => setName(e.target.value)} /><br/>
+            <button name="submitButton" onClick={() => RegisterForm({ email: email, password: password, confirmPassword: confirmPassword, name: name, loggedIn: isLoggedIn, setLoggedIn: setLoggedIn })}>Submit</button>
           </>
       }
     </div>
