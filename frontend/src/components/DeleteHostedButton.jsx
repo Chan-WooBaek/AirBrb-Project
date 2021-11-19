@@ -9,7 +9,10 @@ const DeleteHostedButton = (id) => {
     myFetch('DELETE', 'listings/' + data.id, token, null)
       .then(data => {
         console.log('successfully deleted!');
-        window.location.reload()
+        alert('Listing has been deleted')
+      })
+      .catch(data => {
+        alert('Already deleted listing')
       })
   }
   return (

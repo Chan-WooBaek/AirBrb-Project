@@ -3,6 +3,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import PropTypes from 'prop-types';
+import HostedListingRating from '../components/HostedListingRating';
 
 HostedListingDetails.propTypes = {
   title: PropTypes.string,
@@ -38,7 +39,7 @@ export default function HostedListingDetails ({ title, property, bedrooms, bathr
           {'Bathrooms: ' + bathrooms}
         </Typography>
         <Typography sx={{ fontSize: 30, textAlign: 'center' }}>
-          {'Rating: ' + getRating()}
+          {'Rating: '}<HostedListingRating value={getRating()}></HostedListingRating>
         </Typography>
         <Typography sx={{ fontSize: 30, textAlign: 'center' }}>
           {'Number of Reviews: ' + reviews.length}

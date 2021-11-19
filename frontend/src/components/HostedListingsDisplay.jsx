@@ -9,7 +9,7 @@ import TableRow from '@mui/material/TableRow';
 import { useNavigate } from 'react-router-dom';
 import myFetch from './fetcher';
 import DeleteHostedButton from './DeleteHostedButton';
-import LiveHostedButton from './LiveHostedButton';
+import UnlistHostedButton from './UnlistHostedButton';
 import HostedListingDetails from './HostedListingDetail';
 import AvailabilityCalendar from '../components/AvailabilityCalendar';
 import ManageBookingsButton from '../components/ManageBookingsButton';
@@ -19,7 +19,7 @@ const columns = [
   { id: 'Buttons', maxWidth: 5 },
 ];
 
-export default function ColumnGroupingTable () {
+export default function HostedListingsDisplay () {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [rows, setRows] = React.useState([]);
@@ -44,7 +44,7 @@ export default function ColumnGroupingTable () {
               Buttons: <>
                 <AvailabilityCalendar id={hostedIdList[idIndex]}></AvailabilityCalendar>
                 <DeleteHostedButton id={hostedIdList[idIndex]}/>
-                <LiveHostedButton id={hostedIdList[idIndex]}></LiveHostedButton>
+                <UnlistHostedButton id={hostedIdList[idIndex]}></UnlistHostedButton>
                 <ManageBookingsButton id={hostedIdList[idIndex]}></ManageBookingsButton>
               </>,
             })

@@ -38,7 +38,7 @@ export default function AvailabilityCalendar ({ id }) {
         myFetch('PUT', 'listings/publish/' + id, token, responseBody[0])
           .then(data => {
             console.log('success')
-            window.location.reload()
+            alert('availability has been added!');
           })
       })
   }
