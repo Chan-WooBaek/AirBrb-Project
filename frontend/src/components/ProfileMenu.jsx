@@ -2,7 +2,7 @@ import * as React from 'react';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import myFetch from './fetcher';
 import IconButton from '@mui/material/IconButton';
@@ -21,18 +21,6 @@ export default function ProfileMenu ({ isLoggedIn, setLoggedIn }) {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
-  const handleListings = () => {
-    setAnchorEl(null);
-    moveTo('../listings', { replace: true })
-  }
-
-  const handleHostedListings = () => {
-    setAnchorEl(null);
-    moveTo('../hostedListings', { replace: true })
-  }
-
-  const moveTo = useNavigate();
 
   function handleLoggingOut (isLoggedIn, setLoggedIn) {
     setAnchorEl(null);
@@ -53,7 +41,6 @@ export default function ProfileMenu ({ isLoggedIn, setLoggedIn }) {
         localStorage.setItem('isLoggedIn', false);
         setLoggedIn(false);
       })
-    moveTo('../listings', { replace: true });
   }
 
   return (
@@ -77,9 +64,15 @@ export default function ProfileMenu ({ isLoggedIn, setLoggedIn }) {
           'aria-labelledby': 'basic-button',
         }}
       >
+<<<<<<< HEAD
         <MenuItem onClick={handleListings}>Listings</MenuItem>
         <MenuItem name="myListingsButton" onClick={handleHostedListings}>MyListings</MenuItem>
         <MenuItem onClick={() => handleLoggingOut(isLoggedIn, setLoggedIn)}>Logout</MenuItem>
+=======
+        <Link to='../listings' style={{ textDecoration: 'none', color: 'black' }}><MenuItem onClick={handleClose}>Listings</MenuItem></Link>
+        <Link to='../hostedListings' style={{ textDecoration: 'none', color: 'black' }}><MenuItem onClick={handleClose}>MyListings</MenuItem></Link>
+        <Link to='../listings' style={{ textDecoration: 'none', color: 'black' }}><MenuItem onClick={() => handleLoggingOut(isLoggedIn, setLoggedIn)}>Logout</MenuItem></Link>
+>>>>>>> e473ad1501f2467157fe21f435462c6f7619e337
       </Menu>
     </div>
   );

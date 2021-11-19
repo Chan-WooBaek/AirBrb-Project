@@ -37,8 +37,13 @@ export default function HostedListingsDisplay () {
           for (const res of data) {
             newRow.push({
               content: <>
+<<<<<<< HEAD
                 <img src={res.thumbnail} style={{ width: '50%', height: '30vh' }} />
                 <HostedListingDetails title={res.title} property={res.metadata.propType} bedrooms={res.metadata.beds} bathrooms={res.metadata.bathrooms} reviews={res.reviews} price={res.price}/>
+=======
+                <img src={res.thumbnail} style={{ width: '50%', height: '50vh' }} />
+                <HostedListingDetails title={res.title} property={res.metadata.propType} beds={res.metadata.beds} bathrooms={res.metadata.bathrooms} reviews={res.reviews} price={res.price}/>
+>>>>>>> e473ad1501f2467157fe21f435462c6f7619e337
               </>,
               code: hostedIdList[idIndex],
               Buttons: <>

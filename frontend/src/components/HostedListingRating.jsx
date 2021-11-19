@@ -3,7 +3,10 @@ import Rating from '@mui/material/Rating';
 import PropTypes from 'prop-types';
 
 HostedListingRating.propTypes = {
-  value: PropTypes.number,
+  value: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]),
 }
 
 export default function HostedListingRating ({ value }) {
