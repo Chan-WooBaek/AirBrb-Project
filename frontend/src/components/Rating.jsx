@@ -29,7 +29,8 @@ export default function BasicRating ({ listingId, bookingId }) {
       }
     }
     myFetch('PUT', `listings/${listingId}/review/${bookingId}`, token, body)
-      .then(data => console.log(data))
+    setTextValue('');
+    window.location.reload();
   }
 
   return (
@@ -40,7 +41,7 @@ export default function BasicRating ({ listingId, bookingId }) {
       label="Review"
       multiline
       rows={4}
-      defaultValue=""
+      defaultValue={textValue}
       onChange={updateTextValue('textfield')}
       sx={{ width: '50%' }}
       />

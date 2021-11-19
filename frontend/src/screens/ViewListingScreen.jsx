@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import GuestAppBar from '../components/GuestAppBar';
 import LoggedInAppBar from '../components/LoggedInAppBar';
 import Rating from '../components/Rating';
+import ReviewsTable from '../components/ReviewsTable';
 
 ViewListingScreen.propTypes = {
   isLoggedIn: PropTypes.bool,
@@ -50,7 +51,9 @@ function ViewListingScreen ({ isLoggedIn, setLoggedIn }) {
   async function checkIfAbleToLeaveReview () {
     const token = localStorage.getItem('token');
     const email = localStorage.getItem('user');
-    console.log(email);
+    if (token === 'null') {
+      return;
+    }
     const response = await myFetch('GET', 'bookings', token);
     const dict = response.bookings;
     for (const booking in dict) {
@@ -107,7 +110,7 @@ function ViewListingScreen ({ isLoggedIn, setLoggedIn }) {
       }
       <Box sx={{ display: 'flex', p: 1, m: 1, bgcolor: 'background.paper' }}>
         {details.reviews.length
-          ? <p>{'Reviews : ' + details.reviews[0]}</p>
+          ? <ReviewsTable reviews={details.reviews}></ReviewsTable>
           : <p>{'Currently no reviews for this listing'}</p>
         }
       </Box>
