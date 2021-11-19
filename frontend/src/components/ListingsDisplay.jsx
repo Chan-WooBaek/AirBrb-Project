@@ -126,12 +126,16 @@ export default function ListingsDisplay ({ searchString, setSearchString, minBed
           }
           if (lowRating === true) {
             sortedRows.sort(function (a, b) {
+              if (a.rating === 'No Reviews') return 1;
+              if (b.rating === 'No Reviews') return -1;
               if (a.rating < b.rating) return -1;
               if (a.rating > b.rating) return 1;
               return 0;
             })
           } else if (highRating === true) {
             sortedRows.sort(function (a, b) {
+              if (a.rating === 'No Reviews') return 1;
+              if (b.rating === 'No Reviews') return -1;
               if (a.rating > b.rating) return -1;
               if (a.rating < b.rating) return 1;
               return 0;
