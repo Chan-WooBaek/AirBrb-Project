@@ -26,7 +26,7 @@ export default function HostedListingDetails ({ title, property, beds, bathrooms
   }
 
   return (
-    <Card sx={{ width: '50%', height: '30vh', display: 'inline-block' }}>
+    <Card sx={{ width: '100%', height: '30vh', display: 'inline-block' }}>
       <CardContent>
         <Typography sx={{ fontSize: '2.7vw', textAlign: 'center' }} gutterBottom>
           {title}
@@ -34,13 +34,8 @@ export default function HostedListingDetails ({ title, property, beds, bathrooms
         <Typography sx={{ fontSize: '2.5vw', textAlign: 'center' }}>
           {'Property type: ' + property}
         </Typography>
-<<<<<<< HEAD
         <Typography sx={{ fontSize: '2.5vw', textAlign: 'center' }}>
-          {'Bedrooms: ' + bedrooms}
-=======
-        <Typography sx={{ fontSize: 30, textAlign: 'center' }}>
           {'Beds: ' + beds}
->>>>>>> e473ad1501f2467157fe21f435462c6f7619e337
           <br />
           {'Bathrooms: ' + bathrooms}
         </Typography>

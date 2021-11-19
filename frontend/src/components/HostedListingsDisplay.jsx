@@ -37,13 +37,10 @@ export default function HostedListingsDisplay () {
           for (const res of data) {
             newRow.push({
               content: <>
-<<<<<<< HEAD
-                <img src={res.thumbnail} style={{ width: '50%', height: '30vh' }} />
-                <HostedListingDetails title={res.title} property={res.metadata.propType} bedrooms={res.metadata.beds} bathrooms={res.metadata.bathrooms} reviews={res.reviews} price={res.price}/>
-=======
-                <img src={res.thumbnail} style={{ width: '50%', height: '50vh' }} />
+              <div style={{ width: '100%', height: '24vw', display: 'flex', justifyContent: 'center' }}>
+                <img src={res.thumbnail} style={{ width: '50%', height: '24vw' }} />
+              </div>
                 <HostedListingDetails title={res.title} property={res.metadata.propType} beds={res.metadata.beds} bathrooms={res.metadata.bathrooms} reviews={res.reviews} price={res.price}/>
->>>>>>> e473ad1501f2467157fe21f435462c6f7619e337
               </>,
               code: hostedIdList[idIndex],
               Buttons: <>
@@ -58,7 +55,7 @@ export default function HostedListingsDisplay () {
           setRows(newRow)
         })
       })
-  }, [rows])
+  }, [])
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);

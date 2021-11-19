@@ -21,7 +21,7 @@ export default function ListingDetails ({ title, reviews, price }) {
     else return avgRating.toFixed(1);
   }
   return (
-    <Card sx={{ width: '50%', height: '30vh', display: 'inline-block' }}>
+    <Card sx={{ width: '100%', height: '19vw', display: 'inline-block' }}>
       <CardContent>
         <Typography sx={{ fontSize: '2.7vw', textAlign: 'center' }} gutterBottom>
           {title}

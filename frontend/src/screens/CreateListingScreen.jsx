@@ -44,6 +44,7 @@ const CreateListingForm = () => {
       .catch(err => console.log(err))
     handleEditClick('../hostedListings/', { replace: true })
     setOpen(false);
+    window.location.reload();
   }
 
   const [title, setTitle] = React.useState('');

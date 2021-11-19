@@ -91,7 +91,9 @@ export default function ListingsDisplay ({ searchString, setSearchString, minBed
               dateCheck === true) {
               newRow.push({
                 content: <>
-                  <img src={res.thumbnail} style={{ width: '50%', height: '30vh' }} />
+                  <div style={{ width: '100%', height: '24vw', display: 'flex', justifyContent: 'center' }}>
+                    <img src={res.thumbnail} style={{ width: '50%', height: '24vw' }} />
+                  </div>
                   <ListingDetails title={res.title} reviews={res.reviews} price={res.price} ></ListingDetails>
                 </>,
                 code: IdList[idIndex],

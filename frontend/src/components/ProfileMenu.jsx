@@ -64,15 +64,9 @@ export default function ProfileMenu ({ isLoggedIn, setLoggedIn }) {
           'aria-labelledby': 'basic-button',
         }}
       >
-<<<<<<< HEAD
-        <MenuItem onClick={handleListings}>Listings</MenuItem>
-        <MenuItem name="myListingsButton" onClick={handleHostedListings}>MyListings</MenuItem>
-        <MenuItem onClick={() => handleLoggingOut(isLoggedIn, setLoggedIn)}>Logout</MenuItem>
-=======
         <Link to='../listings' style={{ textDecoration: 'none', color: 'black' }}><MenuItem onClick={handleClose}>Listings</MenuItem></Link>
         <Link to='../hostedListings' style={{ textDecoration: 'none', color: 'black' }}><MenuItem onClick={handleClose}>MyListings</MenuItem></Link>
         <Link to='../listings' style={{ textDecoration: 'none', color: 'black' }}><MenuItem onClick={() => handleLoggingOut(isLoggedIn, setLoggedIn)}>Logout</MenuItem></Link>
->>>>>>> e473ad1501f2467157fe21f435462c6f7619e337
       </Menu>
     </div>
   );
