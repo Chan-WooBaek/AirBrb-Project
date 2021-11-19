@@ -2,16 +2,10 @@ import * as React from 'react';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { useNavigate } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import IconButton from '@mui/material/IconButton';
 
-ProfileMenu.propTypes = {
-  isLoggedIn: PropTypes.bool,
-  setLoggedIn: PropTypes.func
-}
-
-export default function ProfileMenu ({ isLoggedIn, setLoggedIn }) {
+export default function GuestMenu () {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -20,23 +14,6 @@ export default function ProfileMenu ({ isLoggedIn, setLoggedIn }) {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
-  const handleListings = () => {
-    setAnchorEl(null);
-    moveTo('../listings', { replace: true })
-  }
-
-  const handleRegister = () => {
-    setAnchorEl(null);
-    moveTo('../register', { replace: true })
-  }
-
-  const handleLogin = () => {
-    setAnchorEl(null);
-    moveTo('../login', { replace: true })
-  }
-
-  const moveTo = useNavigate();
 
   return (
     <div>
@@ -59,9 +36,9 @@ export default function ProfileMenu ({ isLoggedIn, setLoggedIn }) {
           'aria-labelledby': 'basic-button',
         }}
       >
-        <MenuItem onClick={handleListings}>Listings</MenuItem>
-        <MenuItem onClick={handleRegister}>Register</MenuItem>
-        <MenuItem onClick={handleLogin}>Login</MenuItem>
+        <Link to='../listings' style={{ textDecoration: 'none', color: 'black' }}><MenuItem onClick={handleClose}>Listings</MenuItem></Link>
+        <Link to='../register' style={{ textDecoration: 'none', color: 'black' }}><MenuItem onClick={handleClose}>Register</MenuItem></Link>
+        <Link to='../login' style={{ textDecoration: 'none', color: 'black' }}><MenuItem onClick={handleClose}>Login</MenuItem></Link>
       </Menu>
     </div>
   );
