@@ -1,0 +1,3 @@
+- large, clear buttons and images improve acessibility. 
+- colours are accessible for all 
+- large images with large font size for ease of reading 
