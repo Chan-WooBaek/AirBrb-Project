@@ -53,11 +53,13 @@ export default function ExtraSearch ({ setMinBedrooms, setMaxBedrooms, setMinPri
   const handleLowRating = () => {
     console.log('low');
     const res = !lowRating
+    setHighRating(false)
     setLowRating(res)
   }
 
   const handleHighRating = () => {
     console.log('high');
+    setLowRating(false)
     setHighRating(!highRating)
   }
 
