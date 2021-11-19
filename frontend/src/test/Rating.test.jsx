@@ -28,6 +28,6 @@ describe('rating tests', () => {
     const textDetails = rating.find(TextField);
     textDetails.simulate('change', { target: { value: 'RandomReview' } })
     const RatingValues = rating.find(Rating);
-    textDetails.simulate('change', { target: { value: 3 } })
+    RatingValues.simulate('change', { target: { value: 3 } })
   })
 })
