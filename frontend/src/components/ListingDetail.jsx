@@ -6,14 +6,11 @@ import PropTypes from 'prop-types';
 
 ListingDetails.propTypes = {
   title: PropTypes.string,
-  property: PropTypes.string,
-  bedrooms: PropTypes.object,
-  bathrooms: PropTypes.string,
   reviews: PropTypes.array,
   price: PropTypes.string,
 }
 
-export default function ListingDetails ({ title, property, bedrooms, bathrooms, reviews, price }) {
+export default function ListingDetails ({ title, reviews, price }) {
   function getRating () {
     let totalRating = 0;
     for (const review in reviews) {

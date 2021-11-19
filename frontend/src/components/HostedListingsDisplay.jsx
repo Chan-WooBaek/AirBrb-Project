@@ -38,7 +38,7 @@ export default function HostedListingsDisplay () {
             newRow.push({
               content: <>
                 <img src={res.thumbnail} style={{ width: '50%', height: '50vh' }} />
-                <HostedListingDetails title={res.title} property={res.metadata.propType} bedrooms={res.metadata.beds} bathrooms={res.metadata.bathrooms} reviews={res.reviews} price={res.price}/>
+                <HostedListingDetails title={res.title} property={res.metadata.propType} beds={res.metadata.beds} bathrooms={res.metadata.bathrooms} reviews={res.reviews} price={res.price}/>
               </>,
               code: hostedIdList[idIndex],
               Buttons: <>

@@ -8,22 +8,23 @@ import HostedListingRating from '../components/HostedListingRating';
 HostedListingDetails.propTypes = {
   title: PropTypes.string,
   property: PropTypes.string,
-  bedrooms: PropTypes.string,
+  beds: PropTypes.string,
   bathrooms: PropTypes.string,
   reviews: PropTypes.array,
   price: PropTypes.string,
 }
 
-export default function HostedListingDetails ({ title, property, bedrooms, bathrooms, reviews, price }) {
+export default function HostedListingDetails ({ title, property, beds, bathrooms, reviews, price }) {
   function getRating () {
     let totalRating = 0;
     for (const review in reviews) {
       totalRating += reviews[review].rating;
     }
     const avgRating = (totalRating / reviews.length);
-    if (isNaN(avgRating)) return 'No Reviews';
+    if (isNaN(avgRating)) return null;
     else return avgRating.toFixed(1);
   }
+
   return (
     <Card sx={{ width: '50%', height: '50vh', display: 'inline-block' }}>
       <CardContent>
@@ -34,7 +35,7 @@ export default function HostedListingDetails ({ title, property, bedrooms, bathr
           {'Property type: ' + property}
         </Typography>
         <Typography sx={{ fontSize: 30, textAlign: 'center' }}>
-          {'Bedrooms: ' + bedrooms}
+          {'Beds: ' + beds}
           <br />
           {'Bathrooms: ' + bathrooms}
         </Typography>
