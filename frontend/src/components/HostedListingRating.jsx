@@ -11,6 +11,6 @@ HostedListingRating.propTypes = {
 
 export default function HostedListingRating ({ value }) {
   return (
-    <Rating name="half-rating-read" defaultValue={value} precision={0.5} readOnly />
+    <Rating size='small' name="half-rating-read" defaultValue={value} precision={0.5} readOnly />
   );
 }
